@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" class="croll-smooth font-huruf">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bevel Protractor Simulator</title>
+  <link href="../../output.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.0/dist/cdn.min.js" defer></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      height: 100%;
+      width: 100%;
+     
+    }
+
+    /* Style for the overlay */
+    #orientationWarning {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8); /* Black transparent */
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5em;
+      text-align: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease; /* Smooth fade out */
+    }
+
+    /* Hide the warning with opacity 0 */
+    #orientationWarning.hide {
+      opacity: 0;
+      pointer-events: none; /* Prevent clicking the overlay when hidden */
+    }
+
+    /* Main content styling */
+    main {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <script src="../p5.min.js"></script>
+  <!-- <script src="../addons/p5.sound.js"></script> -->
+  <script src="sketch.js"></script>
+  <script src="main-disc.js"></script>
+  <script src="handlock.js"></script>
+  <script src="vernier-scale.js"></script>
+  <script src="blade.js"></script>
+  <script src="magnifying.js"></script>
+  <script src="handle.js"></script>
+</head>
+
+<body class="bg-slate-900">
+  <div id="orientationWarning">Silakan gunakan mode landscape</div>
+
+  <section class="w-full bg-slate-900">
+    <!-- Navbar -->
+    <div class="mx-auto">
+      <nav class="border-b-[1px] border-emerald-600 py-4 w-full" x-data="{ open: false }">
+        <div class="container mx-auto flex items-center justify-between px-6 lg:px-16">
+          <!-- Brand Name -->
+          <a href="../../index.html#fitur" class="text-2xl font-bold text-emerald-600 md:text-3xl italic">Bevel Simulator</a>
+          <!-- Navbar Links (Desktop) -->
+          <div class="lg:flex lg:items-center lg:space-x-6">
+            <a href="../../index.html#fitur" class="block px-3 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">
+              Home
+            </a>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </section>
+
+   
+  <main>
+  </main>
+
+
+   <!-- Ini Footer ...................................................................................... -->
+   <section id="footer" class="bg-slate-900 text-slate-400 py-2 border-t-2 border-emerald-600">
+    <div class="container mx-auto relative z-0">
+      <div class="flex md:flex-row mx-auto justify-between gap-2 px-8 sm:w-3/4 md:w-4/5 lg:w-3/5">
+        <!-- Contact Information -->
+        <div class="">
+          <h2 class="text-lg font-semibold mb-2 text-slate-400">Contact Us</h2>
+          <p class="text-xs sm:text-sm mb-2 gap-2">
+            <i class="fas fa-map-marker-alt text-emerald-500 pe-2"></i>
+            <span>Kota Serang, Lontar Baru 42115</span>
+          </p>
+          <p class="text-xs sm:text-sm mb-2 gap-2">
+            <i class="fas fa-phone-alt text-emerald-500 me-1"></i>
+            <span>+62 895 2296 0885</span>
+          </p>
+          <p class="text-xs sm:text-sm mb-2 gap-2">
+            <i class="fas fa-envelope text-emerald-500 me-1"></i>
+            <span>fauzanpox@gmail.com</span>
+          </p>
+        </div>
+
+        <!-- Social Media -->
+        <div>
+          <h2 class="text-lg font-semibold mb-2 text-slate-400">Follow Us</h2>
+          <div class="flex space-x-4">
+            <a href="https://www.facebook.com/fauzan.novansyah.1" class="text-slate-400 hover:text-white">
+              <i class="fab fa-facebook-f"></i>
+              <span class="sr-only">Facebook</span>
+            </a>
+            <a href="https://twitter.com" target="_blank" class="text-slate-400 hover:text-white">
+              <i class="fab fa-twitter"></i>
+              <span class="sr-only">Twitter</span>
+            </a>
+            <a href="https://www.instagram.com/ozann15_/" target="_blank" class="text-slate-400 hover:text-white">
+              <i class="fab fa-instagram"></i>
+              <span class="sr-only">Instagram</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center border-t-[1px] border-emerald-600 py-1 w-full">
+      <p class="text-sm">&copy; 2024 Bevel Simulator. All rights reserved.</p>
+    </div>
+  </section>
+  <script>
+    let wasPortrait = window.innerWidth < 768 && window.innerHeight > window.innerWidth; 
+    
+    function checkOrientation() {
+      const orientationWarning = document.getElementById('orientationWarning');
+      const isPortrait = window.innerWidth < 768 && window.innerHeight > window.innerWidth;
+    
+      if (isPortrait) {
+        orientationWarning.classList.remove('hide');
+      } else {
+        orientationWarning.classList.add('hide');
+        if (wasPortrait) {
+          location.reload(); 
+        }
+      }
+      wasPortrait = isPortrait; 
+    }
+    window.addEventListener('load', checkOrientation);
+    window.addEventListener('resize', checkOrientation);
+    window.addEventListener('orientationchange', checkOrientation);
+  </script>
+</body>
+
+</html>

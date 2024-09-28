@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth font-huruf">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bevel Protractor Simulator</title>
+    <link href="output.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.0/dist/cdn.min.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+      .modal {
+        display: none;
+      }
+      .modal[x-show] {
+        display: flex;
+      }
+    </style>
+  </head>
+  <body class="bg-slate-900">
+    <!-- BAGIAN NAVBAR .................................................................... -->
+    <section class="w-full bg-slate-900">
+      <!-- Navbar -->
+      <div class="mx-auto">
+        <nav class="border-b-[1px] border-emerald-600 py-4 w-full" x-data="{ open: false }">
+          <div class="container mx-auto flex items-center justify-between px-6 lg:px-16">
+            <!-- Brand Name -->
+            <a href="index.html#fitur" class="text-2xl font-bold text-emerald-600 md:text-3xl italic">Bevel Simulator</a>
+            <!-- Navbar Links (Desktop) -->
+            <div class="lg:flex lg:items-center lg:space-x-6">
+              <a href="index.html#fitur" class="block px-3 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">
+                Home
+              </a>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </section>
+
+    <!-- HERO SECTION ............................................................................. -->
+    <section class="px-2 py-24">
+      <div
+        class="container mx-auto w-full md:w-3/4 lg:w-4/6 p-4 bg-slate-400 rounded-lg shadow-md flex items-center justify-center"
+        x-data="questionData()">
+        <div id="question-container" class="text-center">
+          <!-- Menampilkan gambar soal -->
+          <img :src="currentImage" alt="Soal" class="mx-auto mb-4 rounded-3xl" x-show="!showAnswer" />
+
+          <!-- Menampilkan jawaban dan tombol next -->
+          <div x-show="showAnswer" class="text-center">
+            <img :src="currentImage" alt="Soal" class="mx-auto" />
+            <p class="mb-4">Jawaban yang benar adalah:</p>
+            <p x-text="answer" class="text-slate-900 mb-4 text-lg font-bold"></p>
+            <button @click="nextQuestion()" class="bg-slate-900 text-slate-400 p-2 rounded">Next</button>
+          </div>
+
+          <!-- Pilihan ganda atau input -->
+          <div x-show="!showAnswer">
+            <!-- Tampilan input untuk soal isian -->
+            <template x-if="currentQuestionType === 'input'">
+              <div>
+                <h1 class="text-xs sm:text-base font-sans font-bold">Berapa hasil pengukuran gambar diatas?</h1>
+                <h1 class="text-xs sm:text-base font-sans font-semibold mb-2">contoh jawaban (10 15')</h1>
+                <input
+                  type="text"
+                  id="answer-input"
+                  placeholder="Masukkan jawaban"
+                  class="border border-gray-300 p-2 rounded mb-4 w-full"
+                  x-model="userAnswer"
+                  @keydown.enter="checkAnswer()" />
+                <button @click="checkAnswer()" class="bg-slate-900 text-slate-400 p-2 rounded">Kirim Jawaban</button>
+              </div>
+            </template>
+
+            <!-- Tampilan pilihan ganda -->
+            <template x-if="currentQuestionType === 'multiple-choice'">
+              <div class="mx-auto w-full sm:w-3/4">
+                <template x-for="option in options">
+                  <div class="flex gap-2 justify-start items-center text-sm md:text-lg text-start">
+                    <input class="mb-2" type="radio" :value="option" x-model="selectedOption" @click="selectOption(option)" />
+                    <label x-text="option" class="text-slate-900 mb-2"></label>
+                  </div>
+                </template>
+                <button @click="checkAnswer()" class="bg-slate-900 text-slate-400 p-2 rounded mt-8">Kirim Jawaban</button>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Modal untuk jawaban benar -->
+        <div x-show="isCorrect" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 modal">
+          <div class="bg-slate-400 p-6 rounded-lg shadow-lg w-80 text-center border-4 border-emerald-600">
+            <p class="mb-4">Jawaban Anda benar!</p>
+            <a href="index.html" class="bg-slate-900 text-slate-400 p-2 px-4 rounded">Kembali</a>
+            <button
+              @click="nextQuestion()"
+              class="text-slate-900 border-2 border-slate-900 p-2 px-4 rounded ms-4 font-semibold hover:text-slate-400 hover:bg-slate-900">
+              Next
+            </button>
+          </div>
+        </div>
+
+        <!-- Modal untuk jawaban salah -->
+        <div x-show="isIncorrect" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 modal">
+          <div class="bg-slate-400 p-6 rounded-lg shadow-lg w-80 text-center border-4 border-rose-600">
+            <p class="mb-4">Jawaban Anda salah.</p>
+            <button @click="retryQuestion()" class="bg-slate-900 text-slate-400 p-2 rounded me-4">Coba Lagi</button>
+            <button @click="showAnswerModal()" class="bg-slate-900 text-slate-400 p-2 rounded">Lihat Jawaban</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Ini Footer ...................................................................................... -->
+    <section id="footer" class="bg-slate-900 text-slate-400 py-2 border-t-2 border-emerald-600">
+      <div class="container mx-auto relative z-0">
+        <div class="flex md:flex-row mx-auto justify-between gap-2 px-8 sm:w-3/4 md:w-4/5 lg:w-3/5">
+          <!-- Contact Information -->
+          <div class="">
+            <h2 class="text-lg font-semibold mb-2 text-slate-400">Contact Us</h2>
+            <p class="text-xs sm:text-sm mb-2 gap-2">
+              <i class="fas fa-map-marker-alt text-emerald-500 pe-2"></i>
+              <span>Kota Serang, Lontar Baru 42115</span>
+            </p>
+            <p class="text-xs sm:text-sm mb-2 gap-2">
+              <i class="fas fa-phone-alt text-emerald-500 me-1"></i>
+              <span>+62 895 2296 0885</span>
+            </p>
+            <p class="text-xs sm:text-sm mb-2 gap-2">
+              <i class="fas fa-envelope text-emerald-500 me-1"></i>
+              <span>fauzanpox@gmail.com</span>
+            </p>
+          </div>
+
+          <!-- Social Media -->
+          <div>
+            <h2 class="text-lg font-semibold mb-2 text-slate-400">Follow Us</h2>
+            <div class="flex space-x-4">
+              <a href="https://www.facebook.com/fauzan.novansyah.1" class="text-slate-400 hover:text-white">
+                <i class="fab fa-facebook-f"></i>
+                <span class="sr-only">Facebook</span>
+              </a>
+              <a href="https://twitter.com" target="_blank" class="text-slate-400 hover:text-white">
+                <i class="fab fa-twitter"></i>
+                <span class="sr-only">Twitter</span>
+              </a>
+              <a href="https://www.instagram.com/ozann15_/" target="_blank" class="text-slate-400 hover:text-white">
+                <i class="fab fa-instagram"></i>
+                <span class="sr-only">Instagram</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="text-center border-t-[1px] border-emerald-600 py-1 w-full">
+        <p class="text-sm">&copy; 2024 Bevel Simulator. All rights reserved.</p>
+      </div>
+    </section>
+
+    <script>
+      function questionData() {
+        return {
+          questions: [
+            { image: "img/soal/soal-8.PNG", answer: "37 55'" },
+            { image: "img/soal/soal-9.PNG", answer: "14 40'" },
+            { image: "img/soal/soal-10.PNG", answer: "9 15'" },
+            { image: "img/soal/soal-11.PNG", answer: "3 10'" },
+            { image: "img/soal/soal-12.PNG", answer: "12 25'" },
+            { image: "img/soal/soal-13.PNG", answer: "27 55'" },
+            { image: "img/soal/soal-14.PNG", answer: "10" },
+            { image: "img/soal/soal-15.PNG", answer: "10" },
+            { image: "img/soal/soal-16.PNG", answer: "24 40'" },
+            { image: "img/soal/soal-17.PNG", answer: "30 25'" },
+            { image: "img/soal/soal-18.PNG", answer: "5 20'" },
+            { image: "img/soal/soal-19.PNG", answer: "9 25'" },
+            { image: "img/soal/soal-20.PNG", answer: "12 5'" },
+            { image: "img/soal/soal-21.PNG", answer: "15 5'" },
+            { image: "img/soal/soal-22.PNG", answer: "31 35'" },
+            { image: "img/soal/soal-23.PNG", answer: "25 50'" },
+            { image: "img/soal/soal-24.PNG", answer: "19 25'" },
+            { image: "img/soal/soal-25.PNG", answer: "15 50'" },
+            { image: "img/soal/soal-26.PNG", answer: "5 30'" },
+            { image: "img/soal/soal-27.PNG", answer: "2 15'" },
+            {
+              image: "img/soal/soal-1.PNG",
+              answer: "kaca pembesar",
+              options: ["skala utama", "skala nonius", "pengunci turret", "kaca pembesar"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/soal-2.PNG",
+              answer: "skala nonius",
+              options: ["bilah", "pengunci bilah", "skala nonius", "turret"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/soal-3.PNG",
+              answer: "skala utama",
+              options: ["skala utama", "pelat dasar", "pengunci bilah", "pengunci turret"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/soal-4.PNG",
+              answer: "pengunci turret",
+              options: ["kaca pembesar", "pengunci turret", "pemutar turret", "skala nonius"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/soal-5.PNG",
+              answer: "bilah",
+              options: ["bilah", "pelat dasar", "skala utama", "pengunci turret"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/soal-6.PNG",
+              answer: "pengunci bilah",
+              options: ["kaca pembesar", "pengunci bilah", "pengunci turret", "bilah"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/soal-7.PNG",
+              answer: "pelat dasar",
+              options: ["skala nonius", "pengunci bilah", "pelat dasar", "skala utama"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/soal-28.PNG",
+              answer: "pemutar turret",
+              options: ["turret", "pemutar turret", "skala utama", "kaca pembesar"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/soal-29.PNG",
+              answer: "turret",
+              options: ["pelat dasar", "pengunci turret", "bilah", "turret"],
+              type: "multiple-choice",
+            },
+            // Soal Pengenalan alat ukur
+            {
+              image: "img/soal/1.PNG",
+              answer: "Mengukur sudut dengan tingkat ketelitian tinggi",
+              options: [
+                "Mengukur sudut dengan tingkat ketelitian tinggi",
+                "Mengukur jarak",
+                "Menentukan kecepatan putaran",
+                "Mengukur tekanan udara",
+              ],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/2.PNG",
+              answer: "5 menit (0,0833°)",
+              options: ["1 derajat", "0,5 derajat", "5 menit (0,0833°)", "10 menit"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/3.PNG",
+              answer: "1 derajat",
+              options: ["5 menit", "10 menit", "1 derajat", "0,5 derajat"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/4.PNG",
+              answer: "Skala dengan pembagian 5 menit",
+              options: [
+                "Skala yang menunjukkan derajat penuh",
+                "Skala dengan pembagian 5 menit",
+                "Skala yang digunakan untuk mengukur panjang",
+                "Skala untuk menghitung waktu",
+              ],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/5.PNG",
+              answer: "Memperhatikan angka 0 di skala nonius",
+              options: [
+                "Memperhatikan angka 10 pada skala utama",
+                "Memperhatikan angka 0 di skala nonius",
+                "Membaca nilai yang terdekat dengan 30 derajat",
+                "Membaca nilai berdasarkan arah jarum jam",
+              ],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/6.PNG",
+              answer: "Bagian kiri skala nonius",
+              options: ["Bagian kiri skala nonius", "Bagian kanan skala nonius", "Bagian tengah skala", "Tidak ada yang dibaca"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/7.PNG",
+              answer: "2° 15'",
+              options: ["2°", "2° 15'", "3°", "3° 15'"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/8.PNG",
+              answer: "15 menit",
+              options: ["5 menit", "10 menit", "15 menit", "20 menit"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/9.PNG",
+              answer: "5 menit",
+              options: ["5 menit", "10 menit", "1 derajat", "60 menit"],
+              type: "multiple-choice",
+            },
+            {
+              image: "img/soal/10.PNG",
+              answer: "Teknik dan metrologi yang membutuhkan presisi tinggi",
+              options: [
+                "Teknik dan metrologi yang membutuhkan presisi tinggi",
+                "Pengukuran panjang jalan",
+                "Penentuan berat benda",
+                "Pembuatan peta skala besar",
+              ],
+              type: "multiple-choice",
+            },
+          ],
+          currentImage: "",
+          answer: "",
+          userAnswer: "",
+          isCorrect: false,
+          isIncorrect: false,
+          showAnswer: false,
+          currentQuestionType: "",
+          options: [],
+          selectedOption: null,
+
+          init() {
+            this.loadQuestion();
+          },
+
+          loadQuestion() {
+            const randomIndex = Math.floor(Math.random() * this.questions.length);
+            const question = this.questions[randomIndex];
+            this.currentImage = this.questions[randomIndex].image;
+            this.answer = this.questions[randomIndex].answer;
+            this.userAnswer = "";
+            this.isCorrect = false;
+            this.isIncorrect = false;
+            this.showAnswer = false;
+            this.selectedOption = null;
+            this.currentQuestionType = question.type;
+
+            if (question.type === "multiple-choice") {
+              this.currentQuestionType = "multiple-choice";
+              this.options = question.options;
+            } else {
+              this.currentQuestionType = "input";
+              this.options = [];
+            }
+          },
+
+          checkAnswer() {
+            // Use selectedOption if available, otherwise check userAnswer
+            const finalAnswer = this.selectedOption !== null ? this.selectedOption : this.userAnswer.trim();
+            if (finalAnswer.toLowerCase() === this.answer.toLowerCase()) {
+              this.isCorrect = true;
+              this.isIncorrect = false;
+              this.showAnswer = false;
+            } else {
+              this.isCorrect = false;
+              this.isIncorrect = true;
+            }
+          },
+
+          selectOption(option) {
+            this.selectedOption = option; // Track selected option
+            this.userAnswer = ""; // Optionally clear user input
+          },
+
+          retryQuestion() {
+            this.isIncorrect = false;
+            this.showAnswer = false;
+            this.selectedOption = null; // Reset selected option
+          },
+
+          showAnswerModal() {
+            this.isIncorrect = false;
+            this.showAnswer = true;
+          },
+
+          nextQuestion() {
+            this.loadQuestion();
+          },
+        };
+      }
+    </script>
+
+    <script src="./node_modules/preline/dist/preline.js"></script>
+  </body>
+</html>
