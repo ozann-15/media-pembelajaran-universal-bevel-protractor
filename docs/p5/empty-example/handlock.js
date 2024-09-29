@@ -14,8 +14,10 @@ class HandLock {
     quadraticVertex(this.x - this.width * 0.5, this.y - this.width * 0.7, this.x - this.width * 0.5 + this.radius * 0.6, this.y - this.width * 0.7);
     vertex(this.x - this.width * 0.5 + this.width - this.radius * 0.6, this.y - this.width * 0.7);
     quadraticVertex(
-      this.x - this.width * 0.5 + this.width, this.y - this.width * 0.7,
-      this.x - this.width * 0.5 + this.width, this.y - this.width * 0.7 + this.radius
+      this.x - this.width * 0.5 + this.width,
+      this.y - this.width * 0.7,
+      this.x - this.width * 0.5 + this.width,
+      this.y - this.width * 0.7 + this.radius
     );
     vertex(this.x - this.width * 0.5 + this.width, this.y - this.width * 0.55 + this.height);
     vertex(this.x - this.width * 0.5, this.y - this.width * 0.55 + this.height);
@@ -25,27 +27,26 @@ class HandLock {
     circle(0, this.y, this.width * 0.9);
 
     // Tombol A
-    fill(120)
+    fill(120);
     circle(0, this.y, this.width * 0.75);
 
     // Tombol B
 
-    fill(100)
+    fill(100);
     circle(0, this.y + this.height - this.width * 1, this.width * 0.6);
-    circle(this.x + this.height /2, this.y, this.width * 0.8);
-    fill('888')
-    textStyle (BOLD);
+    circle(this.x + this.height / 2, this.y, this.width * 0.8);
+    fill("888");
+    textStyle(BOLD);
     textSize(windowHeight * 0.025);
     text("Lock", 0, this.y + this.height - this.width * 1);
     text("Lock", 0, this.y);
 
-
-    fill('#059669');
+    fill("#059669");
     textSize(windowHeight * 0.025);
     textAlign(0, this.y);
-    text("⏬", this.x + this.height *1.2, this.y + 30);
-    text("⏫", this.x + this.height *1.2, this.y - 30);
-    text("swipe", this.x + this.height *1.2, this.y);
+    text("⏬", this.x + this.height * 1.2, this.y + 30);
+    text("⏫", this.x + this.height * 1.2, this.y - 30);
+    text("swipe", this.x + this.height * 1.2, this.y);
     text("⏩", this.x + 90, this.y + this.height * 0.99);
     text("⏪", this.x - 30, this.y + this.height * 0.99);
     text("swipe", this.x + 30, this.y + this.height * 0.99);

@@ -1,10 +1,10 @@
 class ProtractorBlade {
   constructor(x, y, width, height, scale) {
-    this.x = x
-    this.y = y
-    this.width = width
-    this.height = height
-    this.scale = scale
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.scale = scale;
   }
 
   render() {
@@ -24,6 +24,5 @@ class ProtractorBlade {
     vertex(this.x + this.width + this.width * 0.06, this.y + this.height / 2 + this.height * 0.1);
     vertex(this.x - this.width * 0.06, this.y + this.height / 2 + this.height * 0.1);
     endShape(CLOSE);
-
   }
 }
