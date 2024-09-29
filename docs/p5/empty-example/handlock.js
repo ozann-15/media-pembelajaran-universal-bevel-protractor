@@ -44,9 +44,9 @@ class HandLock {
     text("⏬", this.x + this.height *1.2, this.y + 30);
     text("⏫", this.x + this.height *1.2, this.y - 30);
     text("swipe", this.x + this.height *1.2, this.y);
-    text("⏩", this.x + 90, this.y + this.height * 0.92);
-    text("⏪", this.x - 30, this.y + this.height * 0.92);
-    text("swipe", this.x + 30, this.y + this.height * 0.92);
+    text("⏩", this.x + 90, this.y + this.height);
+    text("⏪", this.x - 30, this.y + this.height);
+    text("swipe", this.x + 30, this.y + this.height);
   }
 
   handleClick(mouseX, mouseY) {
