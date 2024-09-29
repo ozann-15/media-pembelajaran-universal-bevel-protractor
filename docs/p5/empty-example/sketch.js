@@ -10,7 +10,7 @@ let zoomFocus = { x: 0, y: 0 };
 let zoomScale = 3.7; // Anda bisa menyesuaikan nilai ini
 
 function setup() {
-  canvas = createCanvas(windowWidth, windowHeight);
+  canvas = createCanvas(windowWidth, windowHeight * 1.2);
   rectMode(CORNER);
 
   document.addEventListener('touchmove', function(event) {
