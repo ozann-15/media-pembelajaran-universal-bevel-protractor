@@ -5,10 +5,6 @@ class HandLock {
     this.width = width;
     this.height = height;
     this.radius = radius;
-    this.buttonAColor = 150;
-    this.buttonBColor = 100;
-    this.isButtonAClicked = false;
-    this.isButtonBClicked = false;
   }
 
   render() {
@@ -29,36 +25,29 @@ class HandLock {
     circle(0, this.y, this.width * 0.9);
 
     // Tombol A
-    fill(this.buttonAColor);
+    fill(120)
     circle(0, this.y, this.width * 0.75);
 
     // Tombol B
-    fill(this.buttonBColor);
-    circle(0, this.y + this.height - this.width * 1, this.width * 0.6);
 
+    fill(100)
+    circle(0, this.y + this.height - this.width * 1, this.width * 0.6);
     circle(this.x + this.height /2, this.y, this.width * 0.8);
+    fill('888')
+    textStyle (BOLD);
+    textSize(windowHeight * 0.025);
+    text("Lock", 0, this.y + this.height - this.width * 1);
+    text("Lock", 0, this.y);
+
 
     fill('#059669');
-    textSize(20);
+    textSize(windowHeight * 0.025);
     textAlign(0, this.y);
     text("⏬", this.x + this.height *1.2, this.y + 30);
     text("⏫", this.x + this.height *1.2, this.y - 30);
     text("swipe", this.x + this.height *1.2, this.y);
-    text("⏩", this.x + 90, this.y + this.height);
-    text("⏪", this.x - 30, this.y + this.height);
-    text("swipe", this.x + 30, this.y + this.height);
-  }
-
-  handleClick(mouseX, mouseY) {
-    // Check if Tombol A is clicked
-    if (dist(mouseX, mouseY, 0, this.y) < this.width * 0.375) {
-      this.isButtonAClicked = !this.isButtonAClicked;
-      this.buttonAColor = this.isButtonAClicked ? 0 : 150;
-    }
-    // Check if Tombol B is clicked
-    else if (dist(mouseX, mouseY, 0, this.y + this.height - this.width * 1) < this.width * 0.3) {
-      this.isButtonBClicked = !this.isButtonBClicked;
-      this.buttonBColor = this.isButtonBClicked ? 0 : 100;
-    }
+    text("⏩", this.x + 90, this.y + this.height * 0.99);
+    text("⏪", this.x - 30, this.y + this.height * 0.99);
+    text("swipe", this.x + 30, this.y + this.height * 0.99);
   }
 }

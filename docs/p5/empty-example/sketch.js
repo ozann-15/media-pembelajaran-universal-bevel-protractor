@@ -8,9 +8,13 @@ let draggingDisc = false;
 let draggingBlade = false;
 let zoomFocus = { x: 0, y: 0 };
 let zoomScale = 3.7; // Anda bisa menyesuaikan nilai ini
+let toggleBlade = false;
+let toggleDisc = false;
+let toggleAngle = false;
+let disc;
 
 function setup() {
-  canvas = createCanvas(windowWidth, windowHeight * 1.2);
+  canvas = createCanvas(windowWidth, windowHeight * 1.4);
   rectMode(CORNER);
 
   document.addEventListener('touchmove', function(event) {
@@ -18,14 +22,16 @@ function setup() {
       event.preventDefault(); // Mencegah scrolling
     }
   }, { passive: false });
+
+  disc = new MainDisc(0, 0, windowHeight * 0.8, windowHeight * 0.25, windowHeight * 0.018);
 }
 
 function draw() {
   mx = mouseX;
   my = mouseY;
 
-  let magnifyingX = width / 2 - 100;
-  let magnifyingY = height / 2 + windowHeight * -0.4;
+  let magnifyingX = width / 2 - 50;
+  let magnifyingY = height / 2 - windowHeight * 0.2 + windowHeight * -0.4;
 
   // Simpan titik fokus zoom
   zoomFocus.x = magnifyingX;
@@ -42,7 +48,25 @@ function draw() {
     translate(-zoomFocus.x, -zoomFocus.y);
   }
 
-  let disc = new MainDisc(0, 0, windowHeight * 0.8, windowHeight * 0.25, windowHeight * 0.018);
+  if (toggleBlade) {
+    draggingBlade = false;
+  }
+  if (toggleDisc) {
+    draggingDisc = false;
+  }
+  if (toggleAngle) {
+   
+  } else {
+    fill ('#059669');
+    rect (width / 2 - 50 + windowHeight * 0.5, 
+      height / 2 - windowHeight * 0.58, 
+      windowHeight * 0.1, 
+      windowHeight * 0.05, 5);
+    fill('#0f172a');
+    textSize(windowHeight * 0.03);
+    text("Hide", width / 2 - 50 + windowHeight * 0.55, height / 2 - windowHeight * 0.55);
+  }
+  
   let vernierScale = new VernierScale(0, 0, windowHeight * 0.325, windowHeight * 0.65, windowHeight * 0.016);
   let blade = new ProtractorBlade(windowWidth * -0.1, disc.radius, windowHeight * 1.2, windowHeight * 0.15);
   let handLock = new HandLock(0, 0, windowHeight * 0.15, disc.radius * 1.9, disc.radius * 0.1);
@@ -50,12 +74,12 @@ function draw() {
   handle = new Handle(0, 0, windowHeight * 0.6, windowHeight * 0.16, 1);
   
 
-  translate(width / 2 - 100, height / 2);
+  translate(width / 2 - 50, height / 2 - windowHeight * 0.2);
 
   // Rotate the disc
   push();
   if (draggingDisc) {
-    discAngle = atan2(mouseY - height / 2, mouseX - width / 2);
+    discAngle = atan2(mouseY - height / 2 + windowHeight * 0.2, mouseX - width / 2 + 50);
   }
   rotate(discAngle);
   disc.render();
@@ -65,33 +89,63 @@ function draw() {
 
   // Move the blade
   push();
-  if (draggingBlade && mouseX < width && mouseX > 0) {
+  if (draggingBlade) {
     bladePosition = mouseX - windowWidth * 0.5;
   }
   translate(bladePosition, 0);
   blade.render();
   pop();
-  
+
   handle.render(discAngle);
   handLock.render();
-
   push();
   magnifying.render();
   pop();
 
+  //tombol-tombol LOCK
   if (mode == "zoom") {
     pop();
-  }
-
-
+  };
+  if (toggleBlade) {
+    fill(100);
+    circle(0, 0 + disc.radius + windowHeight * 0.075, windowHeight * 0.088, 0);
+    fill (999);
+    textSize (windowHeight * 0.02);
+    text("Locked", 0, 0 + disc.radius + windowHeight * 0.075);
+    pop();
+  };
+  if (toggleDisc) {
+    fill(120);
+    circle(0, 0, windowHeight * 0.11, 0);
+    fill (999);
+    textSize (windowHeight * 0.02);
+    text("Locked", 0, 0);
+    pop();
+  };
+    
   // Calculate and display the angle
   let displayedAngle = calculateAngle(discAngle);
   fill('#059669');
   textSize(windowHeight * 0.04);
   textAlign(0,0);
   textStyle (BOLD)
-  text(`Angle: ${displayedAngle.deg}° ${displayedAngle.min}'`, 0 + windowHeight * 0.55, 0 - windowHeight * 0.3);
+  text(`Sudut: ${displayedAngle.deg}° ${displayedAngle.min}'`, 0 + windowHeight * 0.55, 0 - windowHeight * 0.3);
+
+  if (toggleAngle) {
+    fill('#0f172a');
+    rect (0 + windowHeight * 0.4, 
+      0 - windowHeight * 0.4, 
+      windowHeight * 0.3, 
+      windowHeight * 0.15, 5);
+    fill ('#059669');
+    textSize(windowHeight * 0.04);
+    text("SHOW", 0 + windowHeight * 0.555, 0 - windowHeight * 0.322);
+    pop();
+  }
 }
+
+
+  
 function calculateAngle(angleRad) {
   // Convert radian to degree
   let angleDeg = degrees(angleRad);
@@ -113,58 +167,105 @@ function calculateAngle(angleRad) {
   return { deg: degreesPart, min: minutesPart };
 }
 
+//LOGIKA TOMBOL-TOMBOL DAN INTERAKSI
 function mousePressed() {
   // Cek apakah area zoom diklik
   if (isClickInsideMagnifying()) {
     toggleZoom();
     return;
   }
-
+  // cek area toggle blade
+  let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.2 + disc.radius + windowHeight * 0.075)
+  if (d < windowHeight * 0.045) {
+    toggleBlade = !toggleBlade;
+    return;
+  }
+  // cek area toggle disc
+  let c = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.2 )
+  if (c < windowHeight * 0.045) {
+    toggleDisc = !toggleDisc;
+    return;
+  }
+  // cek area toggle angle
+  if (mouseX < width / 2 - 50 + windowHeight * 0.69 && 
+    mouseX > width / 2 - 50 + windowHeight * 0.42 && 
+    mouseY > height / 2 - windowHeight * 0.59 && 
+    mouseY < height / 2 - windowHeight * 0.47) {
+    toggleAngle = !toggleAngle;
+    return;
+  }
   if (mode === "zoom") {
-    mode = ""; 
+    mode = "";
     sf = 1; 
     return;
   }
-
-  // Cek untuk dragging
-  if (mouseX < width && mouseX > 0 && mouseY > height / 1.4 && mouseY < height) {
+  // Cek untuk dragging blade
+  if (mouseX < width / 2 - 50 + windowHeight * 0.7 && 
+    mouseX > width / 2 - 50 - windowHeight * 0.7 && 
+    mouseY > height / 2 - windowHeight * 0.2 + disc.radius && 
+    mouseY < height / 2 - windowHeight * 0.2 + disc.radius + windowHeight * 0.25) {
     draggingBlade = true;
     return;
   }
-  
-  let discDist = dist(mouseX, mouseY, width / 2, height / 2);
-  if (discDist < windowHeight * 0.5) {
-    draggingDisc = true;
-    draggingBlade = false;
-    return;
-  }
+  // cek area disc
+  if (
+    mouseX < width / 2 + disc.radius * 2.5 &&
+    mouseX > width / 2 &&
+    mouseY > height / 2 - windowHeight * 0.2 - disc.radius &&
+    mouseY < height / 2 - windowHeight * 0.2 + disc.radius) {
+      draggingDisc = true;
+      draggingBlase = false;
+    }
 }
 
 function touchStarted() {
    // Cek apakah area zoom diklik
-  if (isClickInsideMagnifying()) {
+   if (isClickInsideMagnifying()) {
     toggleZoom();
     return;
   }
-
+  // cek area toggle blade
+  let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.2 + disc.radius + windowHeight * 0.075)
+  if (d < windowHeight * 0.045) {
+    toggleBlade = !toggleBlade;
+    return;
+  }
+  // cek area toggle disc
+  let c = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.2 )
+  if (c < windowHeight * 0.045) {
+    toggleDisc = !toggleDisc;
+    return;
+  }
+  // cek area toggle angle
+  if (mouseX < width / 2 - 50 + windowHeight * 0.69 && 
+    mouseX > width / 2 - 50 + windowHeight * 0.42 && 
+    mouseY > height / 2 - windowHeight * 0.59 && 
+    mouseY < height / 2 - windowHeight * 0.47) {
+    toggleAngle = !toggleAngle;
+    return;
+  }
   if (mode === "zoom") {
-    mode = ""; 
+    mode = "";
     sf = 1; 
     return;
   }
-
-  // Cek untuk dragging
-  if (mouseX < width && mouseX > 0 && mouseY > height / 1.4 && mouseY < height) {
+  // Cek untuk dragging blade
+  if (mouseX < width / 2 - 50 + windowHeight * 0.7 && 
+    mouseX > width / 2 - 50 - windowHeight * 0.7 && 
+    mouseY > height / 2 - windowHeight * 0.2 + disc.radius && 
+    mouseY < height / 2 - windowHeight * 0.2 + disc.radius + windowHeight * 0.25) {
     draggingBlade = true;
     return;
   }
-  
-  let discDist = dist(mouseX, mouseY, width / 2, height / 2);
-  if (discDist < windowHeight * 0.5) {
-    draggingDisc = true;
-    draggingBlade = false;
-    return;
-  }
+  // cek area disc
+  if (
+    mouseX < width / 2 + disc.radius * 2.5 &&
+    mouseX > width / 2 &&
+    mouseY > height / 2 - windowHeight * 0.2 - disc.radius &&
+    mouseY < height / 2 - windowHeight * 0.2 + disc.radius) {
+      draggingDisc = true;
+      draggingBlase = false;
+    }
 }
 
 function touchEnded() {
@@ -178,8 +279,8 @@ function mouseReleased() {
 }
 
 function isClickInsideMagnifying() {
-  let magnifyingX = width / 2 - 100;
-  let magnifyingY = height / 2 + windowHeight * -0.3;
+  let magnifyingX = width / 2 - 50;
+  let magnifyingY = height / 2 - windowHeight * 0.2 + windowHeight * -0.3;
   let magnifyingWidth = windowHeight * 0.3;
   let magnifyingHeight = windowHeight * 0.2;
   
@@ -195,7 +296,9 @@ function toggleZoom() {
     mode = "";
   } else {
     mode = "zoom";
+
   }
   draggingDisc = false;
   draggingBlade = false;
 }
+
