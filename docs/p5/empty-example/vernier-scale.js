@@ -33,7 +33,7 @@ class VernierScale {
     pop();
 
     // Draw the tick marks
-    for (let angle = 67, i = 0; angle < 114; angle += 23 / 12, i++) {
+    for (let angle = 67, i = 0; angle <= 114; angle += 23 / 12, i++) {
       let x1 = this.x + cos(radians(angle)) * this.radius;
       let y1 = this.y - sin(radians(angle)) * this.radius;
       let x2 = this.x + cos(radians(angle)) * (this.radius - this.radius * 0.05);

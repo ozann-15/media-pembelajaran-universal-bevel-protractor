@@ -236,8 +236,8 @@ function touchStarted() {
   if (
     mouseX < width / 2 - 50 + windowHeight * 0.69 &&
     mouseX > width / 2 - 50 + windowHeight * 0.42 &&
-    mouseY > height / 2 - windowHeight * 0.59 &&
-    mouseY < height / 2 - windowHeight * 0.47
+    mouseY > height / 2 - windowHeight * 0.51 &&
+    mouseY < height / 2 - windowHeight * 0.39
   ) {
     toggleAngle = !toggleAngle;
     return;
