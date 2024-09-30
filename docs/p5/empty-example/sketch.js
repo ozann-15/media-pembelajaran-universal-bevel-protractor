@@ -12,7 +12,6 @@ let toggleBlade = false;
 let toggleDisc = false;
 let toggleAngle = false;
 
-
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight * 1.4);
   rectMode(CORNER);
@@ -26,7 +25,6 @@ function setup() {
     },
     { passive: false }
   );
-
 }
 
 function draw() {
@@ -67,7 +65,7 @@ function draw() {
 
   let disc = new MainDisc(0, 0, windowHeight * 0.8, windowHeight * 0.25, windowHeight * 0.018);
   let vernierScale = new VernierScale(0, 0, windowHeight * 0.325, windowHeight * 0.65, windowHeight * 0.016);
-  let blade = new ProtractorBlade(windowWidth * -0.1, disc.radius, windowHeight * 1.2, windowHeight * 0.15);
+  let blade = new ProtractorBlade(windowWidth * -0.1, windowHeight * 0.25, windowHeight * 1.2, windowHeight * 0.15);
   let handLock = new HandLock(0, 0, windowHeight * 0.15, disc.radius * 1.9, disc.radius * 0.1);
   let magnifying = new Magnifying(0, windowHeight * -0.3, windowHeight * 0.3, windowHeight * 0.2, disc.radius * 0.1);
   handle = new Handle(0, 0, windowHeight * 0.6, windowHeight * 0.16, 1);
@@ -106,10 +104,10 @@ function draw() {
   }
   if (toggleBlade) {
     fill(100);
-    circle(0, 0 + disc.radius + windowHeight * 0.075, windowHeight * 0.088, 0);
+    circle(0, 0 + windowHeight * 0.25 + windowHeight * 0.075, windowHeight * 0.088, 0);
     fill(999);
     textSize(windowHeight * 0.02);
-    text("Locked", 0, 0 + disc.radius + windowHeight * 0.075);
+    text("Locked", 0, 0 + windowHeight * 0.25 + windowHeight * 0.075);
     pop();
   }
   if (toggleDisc) {
@@ -167,18 +165,6 @@ function mousePressed() {
     toggleZoom();
     return;
   }
-  // cek area toggle blade
-  let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.2 + disc.radius + windowHeight * 0.075);
-  if (d < windowHeight * 0.045) {
-    toggleBlade = !toggleBlade;
-    return;
-  }
-  // cek area toggle disc
-  let c = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.2);
-  if (c < windowHeight * 0.045) {
-    toggleDisc = !toggleDisc;
-    return;
-  }
   // cek area toggle angle
   if (
     mouseX < width / 2 - 50 + windowHeight * 0.69 &&
@@ -187,6 +173,18 @@ function mousePressed() {
     mouseY < height / 2 - windowHeight * 0.47
   ) {
     toggleAngle = !toggleAngle;
+    return;
+  }
+  // cek area toggle blade
+  let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.2 + windowHeight * 0.325);
+  if (d < windowHeight * 0.045) {
+    toggleBlade = !toggleBlade;
+    return;
+  }
+  // cek area toggle disc
+  let c = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.2);
+  if (c < windowHeight * 0.045) {
+    toggleDisc = !toggleDisc;
     return;
   }
   if (mode === "zoom") {
@@ -198,18 +196,18 @@ function mousePressed() {
   if (
     mouseX < width / 2 - 50 + windowHeight * 0.7 &&
     mouseX > width / 2 - 50 - windowHeight * 0.7 &&
-    mouseY > height / 2 - windowHeight * 0.2 + disc.radius &&
-    mouseY < height / 2 - windowHeight * 0.2 + disc.radius + windowHeight * 0.25
+    mouseY > height / 2 - windowHeight * 0.2 + windowHeight * 0.25 &&
+    mouseY < height / 2 - windowHeight * 0.2 + windowHeight * 0.25 + windowHeight * 0.25
   ) {
     draggingBlade = true;
     return;
   }
   // cek area disc
   if (
-    mouseX < width / 2 + disc.radius * 2.5 &&
+    mouseX < width / 2 + windowHeight * 0.25 * 2.5 &&
     mouseX > width / 2 &&
-    mouseY > height / 2 - windowHeight * 0.2 - disc.radius &&
-    mouseY < height / 2 - windowHeight * 0.2 + disc.radius
+    mouseY > height / 2 - windowHeight * 0.2 - windowHeight * 0.25 &&
+    mouseY < height / 2 - windowHeight * 0.2 + windowHeight * 0.25
   ) {
     draggingDisc = true;
     draggingBlase = false;
@@ -223,7 +221,7 @@ function touchStarted() {
     return;
   }
   // cek area toggle blade
-  let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.2 + disc.radius + windowHeight * 0.075);
+  let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.2 + windowHeight * 0.25 + windowHeight * 0.075);
   if (d < windowHeight * 0.045) {
     toggleBlade = !toggleBlade;
     return;
@@ -253,18 +251,18 @@ function touchStarted() {
   if (
     mouseX < width / 2 - 50 + windowHeight * 0.7 &&
     mouseX > width / 2 - 50 - windowHeight * 0.7 &&
-    mouseY > height / 2 - windowHeight * 0.2 + disc.radius &&
-    mouseY < height / 2 - windowHeight * 0.2 + disc.radius + windowHeight * 0.25
+    mouseY > height / 2 - windowHeight * 0.2 + windowHeight * 0.25 &&
+    mouseY < height / 2 - windowHeight * 0.2 + windowHeight * 0.25 + windowHeight * 0.25
   ) {
     draggingBlade = true;
     return;
   }
   // cek area disc
   if (
-    mouseX < width / 2 + disc.radius * 2.5 &&
+    mouseX < width / 2 + windowHeight * 0.25 * 2.5 &&
     mouseX > width / 2 &&
-    mouseY > height / 2 - windowHeight * 0.2 - disc.radius &&
-    mouseY < height / 2 - windowHeight * 0.2 + disc.radius
+    mouseY > height / 2 - windowHeight * 0.2 - windowHeight * 0.25 &&
+    mouseY < height / 2 - windowHeight * 0.2 + windowHeight * 0.25
   ) {
     draggingDisc = true;
     draggingBlase = false;
