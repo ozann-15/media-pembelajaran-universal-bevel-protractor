@@ -57,10 +57,10 @@ function draw() {
   if (toggleAngle) {
   } else {
     fill("#059669");
-    rect(width / 2 - 50 + windowHeight * 0.5, height / 2 - windowHeight * 0.58, windowHeight * 0.1, windowHeight * 0.05, 5);
+    rect(width / 2 - 50 + windowHeight * 0.5, height / 2 - windowHeight * 0.5, windowHeight * 0.1, windowHeight * 0.05, 5);
     fill("#0f172a");
     textSize(windowHeight * 0.03);
-    text("Hide", width / 2 - 50 + windowHeight * 0.55, height / 2 - windowHeight * 0.55);
+    text("Hide", width / 2 - 50 + windowHeight * 0.55, height / 2 - windowHeight * 0.47);
   }
 
   let disc = new MainDisc(0, 0, windowHeight * 0.8, windowHeight * 0.25, windowHeight * 0.018);
@@ -169,8 +169,8 @@ function mousePressed() {
   if (
     mouseX < width / 2 - 50 + windowHeight * 0.69 &&
     mouseX > width / 2 - 50 + windowHeight * 0.42 &&
-    mouseY > height / 2 - windowHeight * 0.59 &&
-    mouseY < height / 2 - windowHeight * 0.47
+    mouseY > height / 2 - windowHeight * 0.51 &&
+    mouseY < height / 2 - windowHeight * 0.39
   ) {
     toggleAngle = !toggleAngle;
     return;
