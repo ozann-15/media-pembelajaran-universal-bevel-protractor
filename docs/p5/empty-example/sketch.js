@@ -32,7 +32,7 @@ function draw() {
   my = mouseY;
 
   let magnifyingX = width / 2 - 50;
-  let magnifyingY = height / 2 - windowHeight * 0.16 + windowHeight * -0.4;
+  let magnifyingY = height / 2 - windowHeight * 0.12 + windowHeight * -0.4;
 
   // Simpan titik fokus zoom
   zoomFocus.x = magnifyingX;
@@ -70,12 +70,12 @@ function draw() {
   let magnifying = new Magnifying(0, windowHeight * -0.3, windowHeight * 0.3, windowHeight * 0.2, disc.radius * 0.1);
   handle = new Handle(0, 0, windowHeight * 0.6, windowHeight * 0.16, 1);
 
-  translate(width / 2 - 50, height / 2 - windowHeight * 0.16);
+  translate(width / 2 - 50, height / 2 - windowHeight * 0.12);
 
   // Rotate the disc
   push();
   if (draggingDisc) {
-    discAngle = atan2(mouseY - height / 2 + windowHeight * 0.2, mouseX - width / 2 + 50);
+    discAngle = atan2(mouseY - height / 2 + windowHeight * 0.12, mouseX - width / 2 + 50);
   }
   rotate(discAngle);
   disc.render();
@@ -176,13 +176,13 @@ function mousePressed() {
     return;
   }
   // cek area toggle blade
-  let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.16 + windowHeight * 0.325);
+  let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.12 + windowHeight * 0.325);
   if (d < windowHeight * 0.045) {
     toggleBlade = !toggleBlade;
     return;
   }
   // cek area toggle disc
-  let c = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.16);
+  let c = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.12);
   if (c < windowHeight * 0.045) {
     toggleDisc = !toggleDisc;
     return;
@@ -196,8 +196,8 @@ function mousePressed() {
   if (
     mouseX < width / 2 - 50 + windowHeight * 0.7 &&
     mouseX > width / 2 - 50 - windowHeight * 0.7 &&
-    mouseY > height / 2 - windowHeight * 0.16 + windowHeight * 0.25 &&
-    mouseY < height / 2 - windowHeight * 0.16 + windowHeight * 0.25 + windowHeight * 0.25
+    mouseY > height / 2 - windowHeight * 0.12 + windowHeight * 0.25 &&
+    mouseY < height / 2 - windowHeight * 0.12 + windowHeight * 0.25 + windowHeight * 0.25
   ) {
     draggingBlade = true;
     return;
@@ -206,8 +206,8 @@ function mousePressed() {
   if (
     mouseX < width / 2 + windowHeight * 0.25 * 2.5 &&
     mouseX > width / 2 &&
-    mouseY > height / 2 - windowHeight * 0.16 - windowHeight * 0.25 &&
-    mouseY < height / 2 - windowHeight * 0.16 + windowHeight * 0.25
+    mouseY > height / 2 - windowHeight * 0.12 - windowHeight * 0.25 &&
+    mouseY < height / 2 - windowHeight * 0.12 + windowHeight * 0.25
   ) {
     draggingDisc = true;
     draggingBlase = false;
@@ -221,13 +221,13 @@ function touchStarted() {
     return;
   }
   // cek area toggle blade
-  let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.16 + windowHeight * 0.25 + windowHeight * 0.075);
+  let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.12 + windowHeight * 0.25 + windowHeight * 0.075);
   if (d < windowHeight * 0.045) {
     toggleBlade = !toggleBlade;
     return;
   }
   // cek area toggle disc
-  let c = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.16);
+  let c = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.12);
   if (c < windowHeight * 0.045) {
     toggleDisc = !toggleDisc;
     return;
@@ -251,8 +251,8 @@ function touchStarted() {
   if (
     mouseX < width / 2 - 50 + windowHeight * 0.7 &&
     mouseX > width / 2 - 50 - windowHeight * 0.7 &&
-    mouseY > height / 2 - windowHeight * 0.16 + windowHeight * 0.25 &&
-    mouseY < height / 2 - windowHeight * 0.16 + windowHeight * 0.25 + windowHeight * 0.25
+    mouseY > height / 2 - windowHeight * 0.12 + windowHeight * 0.25 &&
+    mouseY < height / 2 - windowHeight * 0.12 + windowHeight * 0.25 + windowHeight * 0.25
   ) {
     draggingBlade = true;
     return;
@@ -261,8 +261,8 @@ function touchStarted() {
   if (
     mouseX < width / 2 + windowHeight * 0.25 * 2.5 &&
     mouseX > width / 2 &&
-    mouseY > height / 2 - windowHeight * 0.16 - windowHeight * 0.25 &&
-    mouseY < height / 2 - windowHeight * 0.16 + windowHeight * 0.25
+    mouseY > height / 2 - windowHeight * 0.12 - windowHeight * 0.25 &&
+    mouseY < height / 2 - windowHeight * 0.12 + windowHeight * 0.25
   ) {
     draggingDisc = true;
     draggingBlase = false;
@@ -281,7 +281,7 @@ function mouseReleased() {
 
 function isClickInsideMagnifying() {
   let magnifyingX = width / 2 - 50;
-  let magnifyingY = height / 2 - windowHeight * 0.16 + windowHeight * -0.3;
+  let magnifyingY = height / 2 - windowHeight * 0.12 + windowHeight * -0.3;
   let magnifyingWidth = windowHeight * 0.3;
   let magnifyingHeight = windowHeight * 0.2;
 
