@@ -41,15 +41,5 @@ class HandLock {
     text("Lock", 0, this.y);
     textSize(windowHeight * 0.027);
     text("Lock", 0, this.y + this.height - this.width * 1);
-
-    fill("#059669");
-    textSize(windowHeight * 0.03);
-    textAlign(0, this.y);
-    text("⏬", this.x + this.height * 1.2, this.y + this.height * 0.15);
-    text("⏫", this.x + this.height * 1.2, this.y - this.height * 0.15);
-    text("swipe", this.x + this.height * 1.2, this.y);
-    text("⏩", this.x + this.height * 0.3, this.y + this.height * 0.99);
-    text("⏪", this.x - this.height * 0.3, this.y + this.height * 0.99);
-    text("swipe", this.x, this.y + this.height * 0.99);
   }
 }

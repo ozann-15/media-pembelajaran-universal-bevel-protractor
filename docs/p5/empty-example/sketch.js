@@ -2,19 +2,26 @@ let angle = 0;
 let handle;
 let mode = "";
 let discAngle = 0;
-let bladePosition = -200;
+let bladePosition = 150;
 let sf = 1;
 let draggingDisc = false;
 let draggingBlade = false;
 let zoomFocus = { x: 0, y: 0 };
-let zoomScale = 3.7; // Anda bisa menyesuaikan nilai ini
+let zoomScale = 3.7;
 let toggleBlade = false;
 let toggleDisc = false;
 let toggleAngle = false;
+let lastMouseY = 0;
+let lastMouseX = 0;
+let discCenterX, discCenterY;
+const rotationSensitivity = 0.720; // Adjust this to change rotation speed
+const bladeMovementPerFullDrag = 600; // Pergerakan blade untuk satu full drag
 
 function setup() {
   canvas = createCanvas(windowWidth, windowHeight * 1.4);
   rectMode(CORNER);
+  discCenterX = width / 2 - 50;
+  discCenterY = height / 2 - windowHeight * 0.12;
 
   document.addEventListener(
     "touchmove",
@@ -34,14 +41,12 @@ function draw() {
   let magnifyingX = width / 2 - 50;
   let magnifyingY = height / 2 - windowHeight * 0.12 + windowHeight * -0.4;
 
-  // Simpan titik fokus zoom
   zoomFocus.x = magnifyingX;
   zoomFocus.y = magnifyingY;
 
   background("#0f172a");
 
   if (mode == "zoom") {
-    // Terapkan zoom
     push();
     translate(zoomFocus.x, zoomFocus.y);
     scale(zoomScale);
@@ -65,7 +70,7 @@ function draw() {
 
   let disc = new MainDisc(0, 0, windowHeight * 0.8, windowHeight * 0.25, windowHeight * 0.018);
   let vernierScale = new VernierScale(0, 0, windowHeight * 0.325, windowHeight * 0.65, windowHeight * 0.016);
-  let blade = new ProtractorBlade(windowWidth * -0.1, windowHeight * 0.25, windowHeight * 1.2, windowHeight * 0.15);
+  let blade = new ProtractorBlade(windowWidth * -0.5, windowHeight * 0.25, windowHeight * 1.2, windowHeight * 0.15);
   let handLock = new HandLock(0, 0, windowHeight * 0.15, disc.radius * 1.9, disc.radius * 0.1);
   let magnifying = new Magnifying(0, windowHeight * -0.3, windowHeight * 0.3, windowHeight * 0.2, disc.radius * 0.1);
   handle = new Handle(0, 0, windowHeight * 0.6, windowHeight * 0.16, 1);
@@ -74,9 +79,6 @@ function draw() {
 
   // Rotate the disc
   push();
-  if (draggingDisc) {
-    discAngle = atan2(mouseY - height / 2 + windowHeight * 0.12, mouseX - width / 2 + 50);
-  }
   rotate(discAngle);
   disc.render();
   pop();
@@ -85,9 +87,6 @@ function draw() {
 
   // Move the blade
   push();
-  if (draggingBlade) {
-    bladePosition = mouseX - windowWidth * 0.5;
-  }
   translate(bladePosition, 0);
   blade.render();
   pop();
@@ -98,7 +97,6 @@ function draw() {
   magnifying.render();
   pop();
 
-  //tombol-tombol LOCK
   if (mode == "zoom") {
     pop();
   }
@@ -138,7 +136,6 @@ function draw() {
 }
 
 function calculateAngle(angleRad) {
-  // Convert radian to degree
   let angleDeg = degrees(angleRad);
   if (angleDeg < 0) {
     angleDeg += 360;
@@ -149,7 +146,6 @@ function calculateAngle(angleRad) {
   let degreesPart = Math.floor(angleDeg);
   let minutesPart = Math.round((angleDeg - degreesPart) * 60);
 
-  // Round minutes to nearest 5
   minutesPart = Math.round(minutesPart / 5) * 5;
   if (minutesPart == 60) {
     degreesPart += 1;
@@ -158,14 +154,42 @@ function calculateAngle(angleRad) {
   return { deg: degreesPart, min: minutesPart };
 }
 
-//LOGIKA TOMBOL-TOMBOL DAN INTERAKSI
+function mouseDragged() {
+  if (draggingDisc && !toggleDisc) {
+    let dx = mouseX - discCenterX;
+    let dy = mouseY - discCenterY;
+    let lastDx = lastMouseX - discCenterX;
+    let lastDy = lastMouseY - discCenterY;
+    let currentAngle = atan2(dy, dx);
+    let lastAngle = atan2(lastDy, lastDx);
+    let deltaAngle = currentAngle - lastAngle;
+    
+    
+    if (deltaAngle > PI) {
+      deltaAngle -= TWO_PI;
+    } else if (deltaAngle < -PI) {
+      deltaAngle += TWO_PI;
+    }
+    discAngle += deltaAngle * rotationSensitivity;
+    discAngle = (discAngle + TWO_PI) % TWO_PI;
+    
+    lastMouseX = mouseX;
+    lastMouseY = mouseY;
+  } else if (draggingBlade && !toggleBlade) {
+    let deltaX = mouseX - lastMouseX;
+    let movementAmount = (deltaX / (windowWidth * 0.5)) * bladeMovementPerFullDrag;
+
+    bladePosition += movementAmount;
+    bladePosition = constrain(bladePosition, -windowHeight * 0.6, windowWidth);
+    lastMouseX = mouseX;
+  }
+}
+
 function mousePressed() {
-  // Cek apakah area zoom diklik
   if (isClickInsideMagnifying()) {
     toggleZoom();
     return;
   }
-  // cek area toggle angle
   if (
     mouseX < width / 2 - 50 + windowHeight * 0.69 &&
     mouseX > width / 2 - 50 + windowHeight * 0.42 &&
@@ -175,13 +199,11 @@ function mousePressed() {
     toggleAngle = !toggleAngle;
     return;
   }
-  // cek area toggle blade
   let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.12 + windowHeight * 0.325);
   if (d < windowHeight * 0.045) {
     toggleBlade = !toggleBlade;
     return;
   }
-  // cek area toggle disc
   let c = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.12);
   if (c < windowHeight * 0.045) {
     toggleDisc = !toggleDisc;
@@ -192,47 +214,36 @@ function mousePressed() {
     sf = 1;
     return;
   }
-  // Cek untuk dragging blade
-  if (
-    mouseX < width / 2 - 50 + windowHeight * 0.7 &&
-    mouseX > width / 2 - 50 - windowHeight * 0.7 &&
-    mouseY > height / 2 - windowHeight * 0.12 + windowHeight * 0.25 &&
-    mouseY < height / 2 - windowHeight * 0.12 + windowHeight * 0.25 + windowHeight * 0.25
-  ) {
+  if (isMouseInBladeArea() && !toggleBlade) {
+    lastMouseX = mouseX;
     draggingBlade = true;
+    draggingDisc = false;
     return;
   }
-  // cek area disc
-  if (
-    mouseX < width / 2 + windowHeight * 0.25 * 2.5 &&
-    mouseX > width / 2 &&
-    mouseY > height / 2 - windowHeight * 0.12 - windowHeight * 0.25 &&
-    mouseY < height / 2 - windowHeight * 0.12 + windowHeight * 0.25
-  ) {
+  if (isMouseInDiscArea() && !toggleDisc) {
+    lastMouseX = mouseX;
+    lastMouseY = mouseY;
     draggingDisc = true;
-    draggingBlase = false;
+    draggingBlade = false;
+    return;
   }
 }
 
 function touchStarted() {
-  // Cek apakah area zoom diklik
   if (isClickInsideMagnifying()) {
     toggleZoom();
     return;
   }
-  // cek area toggle blade
   let d = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.12 + windowHeight * 0.25 + windowHeight * 0.075);
   if (d < windowHeight * 0.045) {
     toggleBlade = !toggleBlade;
     return;
   }
-  // cek area toggle disc
   let c = dist(mouseX, mouseY, width / 2 - 50, height / 2 - windowHeight * 0.12);
   if (c < windowHeight * 0.045) {
     toggleDisc = !toggleDisc;
     return;
   }
-  // cek area toggle angle
   if (
     mouseX < width / 2 - 50 + windowHeight * 0.69 &&
     mouseX > width / 2 - 50 + windowHeight * 0.42 &&
@@ -247,25 +258,17 @@ function touchStarted() {
     sf = 1;
     return;
   }
-  // Cek untuk dragging blade
-  if (
-    mouseX < width / 2 - 50 + windowHeight * 0.7 &&
-    mouseX > width / 2 - 50 - windowHeight * 0.7 &&
-    mouseY > height / 2 - windowHeight * 0.12 + windowHeight * 0.25 &&
-    mouseY < height / 2 - windowHeight * 0.12 + windowHeight * 0.25 + windowHeight * 0.25
-  ) {
+  if (isMouseInBladeArea() && !toggleBlade) {
+    lastMouseX = mouseX;
     draggingBlade = true;
+    draggingDisc = false;
     return;
   }
-  // cek area disc
-  if (
-    mouseX < width / 2 + windowHeight * 0.25 * 2.5 &&
-    mouseX > width / 2 &&
-    mouseY > height / 2 - windowHeight * 0.12 - windowHeight * 0.25 &&
-    mouseY < height / 2 - windowHeight * 0.12 + windowHeight * 0.25
-  ) {
+  if (isMouseInDiscArea() && !toggleDisc) {
+    lastMouseX = mouseX;
+    lastMouseY = mouseY;
     draggingDisc = true;
-    draggingBlase = false;
+    draggingBlade = false;
   }
 }
 
@@ -277,6 +280,26 @@ function touchEnded() {
 function mouseReleased() {
   draggingDisc = false;
   draggingBlade = false;
+}
+
+function isMouseInDiscArea() {
+  let discRadius = windowHeight * 0.35; // Setengah dari diameter disc
+  let d = dist(mouseX, mouseY, discCenterX, discCenterY);
+  return d < discRadius;
+}
+
+function isMouseInBladeArea() {
+  let bladeAreaTop = height / 2 - windowHeight * 0.12 + windowHeight * 0.25;
+  let bladeAreaBottom = bladeAreaTop + windowHeight * 0.15;
+  let bladeAreaLeft = windowWidth * 0.05;
+  let bladeAreaRight = windowWidth * 0.95;
+
+  return (
+    mouseX > bladeAreaLeft &&
+    mouseX < bladeAreaRight &&
+    mouseY > bladeAreaTop &&
+    mouseY < bladeAreaBottom
+  );
 }
 
 function isClickInsideMagnifying() {
@@ -293,7 +316,6 @@ function isClickInsideMagnifying() {
   );
 }
 
-// Fungsi baru untuk toggle zoom
 function toggleZoom() {
   if (mode === "zoom") {
     mode = "";

@@ -20,20 +20,44 @@
       .modal[x-show] {
         display: flex;
       }
+      [x-cloak] {
+          display: none !important;
+      }
+
     </style>
   </head>
   <body class="bg-slate-900">
     <!-- BAGIAN NAVBAR .................................................................... -->
-    <section class="w-full bg-slate-900">
+    <section class="w-full bg-slate-900 z-10">
       <!-- Navbar -->
       <div class="mx-auto">
         <nav class="border-b-[1px] border-emerald-600 py-4 w-full" x-data="{ open: false }">
-          <div class="container mx-auto flex items-center justify-between px-6 lg:px-16">
+          <div class="container mx-auto flex items-center justify-between px-4 lg:px-16">
             <!-- Brand Name -->
-            <a href="index.html#fitur" class="text-2xl font-bold text-emerald-600 md:text-3xl italic">Bevel Simulator</a>
+            <a href="index.html" class="text-xl sm:text-2xl font-bold text-emerald-600 md:text-3xl italic">Bevel Simulator</a>
             <!-- Navbar Links (Desktop) -->
-            <div class="lg:flex lg:items-center lg:space-x-6">
-              <a href="index.html#fitur" class="block px-3 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">
+            <div class="flex gap-2 sm:gap-8">
+              <div class="relative" x-data={open:false}>
+                <a @click="open=!open" href="#fitur" class="flex items-center px-2 py-1 text-lg lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">
+                  Features 
+                  <svg class="hs-dropdown-open:rotate-180 size-4 ms-1 mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </a>
+                <!-- dropdown our features -->
+                <div class="absolute z-50 top-7 w-full shadow-lg" x-show="open" x-cloak @click.away="open = false"
+                x-transition:enter="transition-transform transform origin-top duration-500"
+                x-transition:enter-start="-translate-y-full"
+                x-transition:enter-end="translate-y-0"
+                x-transition:leave="transition-transform transform origin-top duration-500"
+                x-transition:leave-start="translate-y-0"
+                x-transition:leave-end="-translate-y-full">
+                  <div class="flex flex-col rounded-b-md text-center text-white text-sm bg-slate-900 opacity-90 py-6 shadow-lg ">
+                    <a href="materi.html" class="text-slate-400 font-semibold block mx-auto px-2 py-2 hover:bg-slate-800 hover:rounded-md w-full">Materi</a>
+                    <a href="p5/empty-example/Simulator.html" 
+                    class="text-slate-400 font-semibold block mx-auto px-2 py-2 hover:bg-slate-800 hover:rounded-md w-full">Simulator</a>
+                  </div>
+                </div>
+              </div>
+              <a href="index.html#fitur" class="block px-2 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">
                 Home
               </a>
             </div>
@@ -43,24 +67,66 @@
     </section>
 
     <!-- HERO SECTION ............................................................................. -->
-    <section class="px-2 py-24">
+    <section class="px-2 py-4">
       <div
-        class="container mx-auto w-full md:w-3/4 lg:w-4/6 p-4 bg-slate-400 rounded-lg shadow-md flex items-center justify-center"
-        x-data="questionData()">
-        <div id="question-container" class="text-center">
+        class="container mx-auto w-full md:w-3/4 lg:w-1/2 p-4 bg-slate-400 rounded-lg shadow-md flex items-center justify-center"
+        x-data="quizData()">
+        <div id="question-container" x-cloak class="text-center w-full">
+          <!-- Progress bar -->
+          <div class="mb-1">
+            <div class="relative w-full h-4 bg-gray-200 rounded-full overflow-hidden" role="progressbar" :aria-valuenow="score" aria-valuemin="0" aria-valuemax="100">
+              <div class="absolute inset-0 flex">
+                <div class="overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500" :style="'width: ' + score + '%'" x-text="score + '%'" style="direction: ltr;"></div>
+              </div>
+              <div class="absolute inset-0 flex justify-end">
+                <div class="overflow-hidden bg-pink-800 text-xs text-white text-center whitespace-nowrap transition duration-500" :style="'width: ' + salah + '%'" x-text="salah + '%'" style="direction: rtl;"></div>
+              </div>
+            </div>
+          </div>
+          
           <!-- Menampilkan gambar soal -->
-          <img :src="currentImage" alt="Soal" class="mx-auto mb-4 rounded-3xl animate__animated animate__backInDown" x-show="!showAnswer" />
+          <div class="px-2 inline-block font-semibold">soal ke <span x-text="soal" class="font-bold text-xl"></span> / 10</div>
+          <figure class="p-0 m-0 relative" x-data="{open:false}" x-show="!showAnswer">
+            <img :src="currentImage" alt="Soal" 
+            class="mx-auto mb-2 rounded-3xl shadow-xl animate__animated animate__backInDowns sm:w-2/3" />
+            <button id="zoom" @click="open=!open" 
+            class="absolute z-30 top-2 right-5 font-bold text-2xl rounded-md hidden p-2 md:block bg-gray-400 shadow-md" x-cloak>🔍</button>
+            <img :src="currentImage" alt="Soal" 
+            class="mx-auto mb-2 rounded-2xl animate__animated animate__backInDowns scale-125 absolute top-0 z-20 shadow-2xl border-2 border-emerald-600"
+            x-show="open" x-cloak @click.away="open = false" 
+            x-transition:enter="transition ease-out duration-500"
+            x-transition:enter-start="opacity-0 scale-50"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-500"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-50"/>
+          </figure>
 
           <!-- Menampilkan jawaban dan tombol next -->
-          <div x-show="showAnswer" class="text-center">
-            <img :src="currentImage" alt="Soal" class="mx-auto" />
-            <p class="mb-4">Jawaban yang benar adalah:</p>
-            <p x-text="answer" class="text-slate-900 mb-4 text-lg font-bold"></p>
-            <button @click="nextQuestion()" class="bg-slate-900 text-slate-400 p-2 rounded">Next</button>
+          <div x-show="showAnswer"
+            class="text-center">
+              <figure class="p-0 m-0 relative" x-data="{open:false}">
+                <img :src="currentImage" alt="Soal" 
+                class="mx-auto mb-2 rounded-3xl animate__animated animate__backInDowns md:w-2/3"/>
+                <button id="zoom" @click="open=!open" x-cloak 
+                class="absolute z-30 top-2 right-5 font-bold text-2xl rounded-md hidden p-2 md:block bg-gray-400 shadow-md">🔍</button>
+                <img :src="currentImage" alt="Soal"
+                class="mx-auto mb-2 rounded-2xl animate__animated animate__backInDowns scale-125 absolute top-0 z-20 shadow-2xl border-2 border-emerald-600" 
+                x-show="open" x-cloak @click.away="open = false"
+                x-transition:enter="transition ease-out duration-500"
+                x-transition:enter-start="opacity-0 scale-50"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-500"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-50"/>
+              </figure>
+              <p class="mb-2">Jawaban yang benar adalah:</p>
+              <p x-text="answer" class="text-slate-900 mb-2 text-lg font-bold"></p>
+              <button @click="nextQuestion()" class="bg-slate-900 text-slate-400 p-2 rounded">Next</button>
           </div>
 
           <!-- Pilihan ganda atau input -->
-          <div x-show="!showAnswer">
+          <div x-show="!showAnswer" x-cloak>
             <!-- Tampilan input untuk soal isian -->
             <template x-if="currentQuestionType === 'input'">
               <div>
@@ -73,51 +139,95 @@
                   class="border border-gray-300 p-2 rounded mb-4 w-full"
                   x-model="userAnswer"
                   @keydown.enter="checkAnswer()" />
-                <button @click="checkAnswer()" class="bg-slate-900 text-slate-400 p-2 rounded">Kirim Jawaban</button>
+                <button @click="checkAnswer()" class="bg-slate-900 text-slate-400 p-2 rounded shadow-lg">Kirim Jawaban</button>
               </div>
             </template>
 
             <!-- Tampilan pilihan ganda -->
             <template x-if="currentQuestionType === 'multiple-choice'">
               <div class="mx-auto w-full sm:w-3/4">
-                <template x-for="option in options">
-                  <div class="flex gap-2 justify-start items-center text-sm md:text-lg text-start">
-                    <input class="mb-2" type="radio" :value="option" x-model="selectedOption" @click="selectOption(option)" />
-                    <label x-text="option" class="text-slate-900 mb-2"></label>
+                <template x-for="(option, index) in options" :key="index">
+                  <div class="flex gap-2 mt-4 justify-start items-center text-sm text-start md:ms-8 lg:ms-12">
+                    <!-- Gunakan atribut 'name' untuk memisahkan soal, misal menggunakan 'soal' sebagai identifier -->
+                    <input class="border-none checked:bg-white" type="radio" :id="'option-' + soal + '-' + index" :name="'question-' + soal" :value="option" x-model="selectedOption" @click="selectOption(option)" />
+                    <label :for="'option-' + soal + '-' + index" x-text="option" class="text-slate-900 "></label>
                   </div>
                 </template>
-                <button @click="checkAnswer()" class="bg-slate-900 text-slate-400 p-2 rounded mt-8">Kirim Jawaban</button>
+                <button @click="checkAnswer()" class="bg-slate-900 text-slate-400 p-2 rounded mt-2 shadow-lg">Kirim Jawaban</button>
               </div>
             </template>
           </div>
         </div>
 
         <!-- Modal untuk jawaban benar -->
-        <div x-show="isCorrect" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 modal">
-          <div class="bg-slate-400 p-6 rounded-lg shadow-lg w-80 text-center border-4 border-emerald-600">
+        <div x-show="isCorrect" x-cloak class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 modal">
+          <div class="bg-slate-400 p-6 rounded-lg shadow-lg w-80 text-center border-4 border-emerald-600 animate__animated animate__shakeY animate__fast">
             <p class="mb-4">Jawaban Anda benar!</p>
-            <a href="index.html" class="bg-slate-900 text-slate-400 p-2 px-4 rounded">Kembali</a>
-            <button
-              @click="nextQuestion()"
-              class="text-slate-900 border-2 border-slate-900 p-2 px-4 rounded ms-4 font-semibold hover:text-slate-400 hover:bg-slate-900">
-              Next
-            </button>
+            <button @click="nextQuestion()" class="bg-slate-900 text-slate-400 p-2 rounded">Lanjutkan</button>
           </div>
         </div>
 
         <!-- Modal untuk jawaban salah -->
-        <div x-show="isIncorrect" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 modal">
-          <div class="bg-slate-400 p-6 rounded-lg shadow-lg w-80 text-center border-4 border-rose-600">
+        <div x-show="isIncorrect" x-cloak class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 modal">
+          <div class="bg-slate-400 p-6 rounded-lg shadow-lg w-80 text-center border-4 border-pink-800 animate__animated animate__shakeX animate__faster">
             <p class="mb-4">Jawaban Anda salah.</p>
-            <button @click="retryQuestion()" class="bg-slate-900 text-slate-400 p-2 rounded me-4">Coba Lagi</button>
-            <button @click="showAnswerModal()" class="bg-slate-900 text-slate-400 p-2 rounded">Lihat Jawaban</button>
+              <button @click="showAnswerModal()" class="bg-slate-900 text-slate-400 p-2 rounded">Lihat Jawaban</button>
+          </div>
+        </div>
+
+        <!-- Modal untuk hasil akhir -->
+        <div x-show="quizCompleted" x-cloak class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 modal">
+          <div class="bg-slate-400 p-6 rounded-lg shadow-lg w-96 text-center border-4 border-emerald-600 animate__animated animate__rubberBand">
+            <h2 class="text-2xl font-bold mb-4">Hasil Akhir</h2>
+            <p class="mb-4">Nilai Kamu = <span x-text="score" class="font-bold text-xl"></span> / 100</p>
+            <p class="mb-4" x-text="feedbackMessage"></p>
+            <button @click="restartQuiz()" class="bg-slate-900 text-slate-400 p-2 rounded me-4">Mulai Lagi</button>
+            <a href="index.html" class="bg-slate-900 text-slate-400 p-2 rounded inline-block">Home</a>
+          </div>
+        </div>
+
+        <!-- Modal Petunjuk Pengerjaan -->
+        <div x-show="petunjuk" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 modal">
+          <div class="bg-slate-400 border-4 border-emerald-600 shadow-md rounded-lg p-4 w-96 animate__animated animate__zoomInDown">
+            <h1 class="text-lg font-bold text-slate-900 mb-2">Petunjuk Pengerjaan</h1>
+      
+            <ol class="list-decimal ml-5 text-slate-900 space-y-2">
+              <li class="text-xs md:text-sm">
+                <span class="font-semibold">Total Soal: 10</span>
+                <p>Terdapat 3 jenis soal yang perlu dikerjakan:</p>
+                <ul class="list-disc ml-6">
+                  <li>3 soal terkait <span class="font-semibold">pengetahuan tentang universal bevel protractor</span>.</li>
+                  <li>4 soal tentang <span class="font-semibold">membaca hasil pengukuran</span>.</li>
+                  <li>3 soal mengenai <span class="font-semibold">bagian-bagian alat ukur</span> universal bevel protractor.</li>
+                </ul>
+              </li>
+      
+              <li class="text-xs md:text-sm">
+                <span class="">Setiap soal bernilai <span class="font-semibold">10 poin.</span> Dengan Nilai Minimum Kelulusan  <span class="font-semibold">70.</span></span>
+              </li>
+      
+              <li class="text-xs md:text-sm">
+                Pastikan kamu memahami setiap soal dengan baik sebelum menjawab. jika belum siap, silakan belajar lagi pada menu 
+                <a href="materi.html" class="font-semibold underline hover:text-emerald-600 transition duration-300">Materi</a> dan latihan pada menu 
+                <a href="p5/empty-example/Simulator.html" class="font-semibold underline hover:text-emerald-600 transition duration-300">Simulator.</a> GoodLuck!!!
+              </li>
+            </ol>
+      
+            <div class="mt-6 flex justify-center">
+              <button @click="restartQuiz()" class="font-semibold bg-slate-900 text-slate-400 px-4 py-2 rounded-md hover:bg-emerald-600 hover:text-slate-900">
+                Mulai Mengerjakan Soal
+              </button>
+            </div>
           </div>
         </div>
       </div>
+
+      
     </section>
+
     <!-- Ini Footer ...................................................................................... -->
-    <section id="footer" class="bg-slate-900 text-slate-400 py-2 border-t-2 border-emerald-600">
-      <div class="container mx-auto relative z-0">
+    <section id="footer" class="bg-slate-900 fixed bottom-0 w-full text-slate-400 py-2 border-t-2 border-emerald-600">
+      <div class="container mx-auto">
         <div class="flex md:flex-row mx-auto justify-between gap-2 px-8 sm:w-3/4 md:w-4/5 lg:w-3/5">
           <!-- Contact Information -->
           <div class="">
@@ -162,29 +272,31 @@
     </section>
 
     <script>
-      function questionData() {
+      function quizData() {
         return {
           questions: [
-            { image: "img/soal/soal-8.PNG", answer: "37 55'" },
-            { image: "img/soal/soal-9.PNG", answer: "14 40'" },
-            { image: "img/soal/soal-10.PNG", answer: "9 15'" },
-            { image: "img/soal/soal-11.PNG", answer: "3 10'" },
-            { image: "img/soal/soal-12.PNG", answer: "12 25'" },
-            { image: "img/soal/soal-13.PNG", answer: "27 55'" },
-            { image: "img/soal/soal-14.PNG", answer: "10" },
-            { image: "img/soal/soal-15.PNG", answer: "10" },
-            { image: "img/soal/soal-16.PNG", answer: "24 40'" },
-            { image: "img/soal/soal-17.PNG", answer: "30 25'" },
-            { image: "img/soal/soal-18.PNG", answer: "5 20'" },
-            { image: "img/soal/soal-19.PNG", answer: "9 25'" },
-            { image: "img/soal/soal-20.PNG", answer: "12 5'" },
-            { image: "img/soal/soal-21.PNG", answer: "15 5'" },
-            { image: "img/soal/soal-22.PNG", answer: "31 35'" },
-            { image: "img/soal/soal-23.PNG", answer: "25 50'" },
-            { image: "img/soal/soal-24.PNG", answer: "19 25'" },
-            { image: "img/soal/soal-25.PNG", answer: "15 50'" },
-            { image: "img/soal/soal-26.PNG", answer: "5 30'" },
-            { image: "img/soal/soal-27.PNG", answer: "2 15'" },
+            //jenis soal 1
+            { image: "img/soal/soal-8.PNG", answer: "24 35'", type: "input",},
+            { image: "img/soal/soal-9.PNG", answer: "13 15'", type: "input",},
+            { image: "img/soal/soal-10.PNG", answer: "16 45'", type: "input",},
+            { image: "img/soal/soal-11.PNG", answer: "17 50'", type: "input",},
+            { image: "img/soal/soal-12.PNG", answer: "19 45'", type: "input",},
+            { image: "img/soal/soal-13.PNG", answer: "27 55'", type: "input",},
+            { image: "img/soal/soal-14.PNG", answer: "10", type: "input",},
+            { image: "img/soal/soal-15.PNG", answer: "23 5'", type: "input",},
+            { image: "img/soal/soal-16.PNG", answer: "24 40'", type: "input",},
+            { image: "img/soal/soal-17.PNG", answer: "30 25'", type: "input",},
+            { image: "img/soal/soal-18.PNG", answer: "5 20'", type: "input",},
+            { image: "img/soal/soal-19.PNG", answer: "9 25'", type: "input",},
+            { image: "img/soal/soal-20.PNG", answer: "12 50'", type: "input",},
+            { image: "img/soal/soal-21.PNG", answer: "15 5'", type: "input",},
+            { image: "img/soal/soal-22.PNG", answer: "31 35'", type: "input",},
+            { image: "img/soal/soal-23.PNG", answer: "25 50'", type: "input",},
+            { image: "img/soal/soal-24.PNG", answer: "19 25'", type: "input",},
+            { image: "img/soal/soal-25.PNG", answer: "15 20'", type: "input",},
+            { image: "img/soal/soal-26.PNG", answer: "5 30'", type: "input",},
+            { image: "img/soal/soal-27.PNG", answer: "2 15'", type: "input",},
+            // jenis soal 2
             {
               image: "img/soal/soal-1.PNG",
               answer: "kaca pembesar",
@@ -198,7 +310,7 @@
               type: "multiple-choice",
             },
             {
-              image: "img/soal/soal-3.PNG",
+            image: "img/soal/soal-3.PNG",
               answer: "skala utama",
               options: ["skala utama", "pelat dasar", "pengunci bilah", "pengunci turret"],
               type: "multiple-choice",
@@ -239,7 +351,7 @@
               options: ["pelat dasar", "pengunci turret", "bilah", "turret"],
               type: "multiple-choice",
             },
-            // Soal Pengenalan alat ukur
+            // jenis soal 3
             {
               image: "img/soal/1.PNG",
               answer: "Mengukur sudut dengan tingkat ketelitian tinggi",
@@ -327,67 +439,126 @@
           isCorrect: false,
           isIncorrect: false,
           showAnswer: false,
+          petunjuk: true,
           currentQuestionType: "",
           options: [],
           selectedOption: null,
+          quizQuestions: [],
+          currentQuestionIndex: 0,
+          score: 0,
+          quizCompleted: false,
+          progressPercentage: 0,
+          feedbackMessage: "",
+          answerChecked: false,
+          soal: 0,
+          salah: 0,
 
           init() {
+            this.generateQuizQuestions();
             this.loadQuestion();
+          
+          },
+
+          generateQuizQuestions() {
+            const type1Questions = this.shuffleArray(this.questions.filter(q => q.type === "input")).slice(0, 4);
+            const type2Questions = this.shuffleArray(this.questions.filter(q => q.type === "multiple-choice" && q.image.includes("soal-"))).slice(0, 3);
+            const type3Questions = this.shuffleArray(this.questions.filter(q => q.type === "multiple-choice" && !q.image.includes("soal-"))).slice(0, 3);
+            this.quizQuestions = this.shuffleArray([...type1Questions, ...type2Questions, ...type3Questions]);
+            this.salah = 0;
+          },
+
+          shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+              const j = Math.floor(Math.random() * (i + 1));
+              [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
           },
 
           loadQuestion() {
-            const randomIndex = Math.floor(Math.random() * this.questions.length);
-            const question = this.questions[randomIndex];
-            this.currentImage = this.questions[randomIndex].image;
-            this.answer = this.questions[randomIndex].answer;
-            this.userAnswer = "";
-            this.isCorrect = false;
-            this.isIncorrect = false;
-            this.showAnswer = false;
-            this.selectedOption = null;
-            this.currentQuestionType = question.type;
-
-            if (question.type === "multiple-choice") {
-              this.currentQuestionType = "multiple-choice";
-              this.options = question.options;
+            if (this.currentQuestionIndex < this.quizQuestions.length) {
+              const question = this.quizQuestions[this.currentQuestionIndex];
+              this.currentImage = question.image;
+              this.answer = question.answer;
+              this.userAnswer = "";
+              this.isCorrect = false;
+              this.isIncorrect = false;
+              this.showAnswer = false;
+              this.selectedOption = null;
+              this.currentQuestionType = question.type;
+              this.options = question.options || [];
+              this.answerChecked = false; // Reset flag saat memuat pertanyaan baru
+              this.soal = this.currentQuestionIndex + 1;
             } else {
-              this.currentQuestionType = "input";
-              this.options = [];
+              this.completeQuiz();
+              
             }
           },
 
           checkAnswer() {
-            // Use selectedOption if available, otherwise check userAnswer
+            if (this.answerChecked) return; // Jika jawaban sudah diperiksa, keluar dari fungsi
+
             const finalAnswer = this.selectedOption !== null ? this.selectedOption : this.userAnswer.trim();
             if (finalAnswer.toLowerCase() === this.answer.toLowerCase()) {
               this.isCorrect = true;
-              this.isIncorrect = false;
-              this.showAnswer = false;
+              this.score += 10;
             } else {
-              this.isCorrect = false;
               this.isIncorrect = true;
             }
+            this.answerChecked = true; // Tandai bahwa jawaban sudah diperiksa
           },
 
           selectOption(option) {
-            this.selectedOption = option; // Track selected option
-            this.userAnswer = ""; // Optionally clear user input
+            this.selectedOption = option;
+            this.userAnswer = "";
           },
 
           retryQuestion() {
             this.isIncorrect = false;
             this.showAnswer = false;
-            this.selectedOption = null; // Reset selected option
+            this.selectedOption = null;
+            this.answerChecked = false; // Reset flag saat mencoba lagi
           },
 
           showAnswerModal() {
             this.isIncorrect = false;
             this.showAnswer = true;
+            this.salah += 10;
+            
           },
 
           nextQuestion() {
-            this.loadQuestion();
+            this.currentQuestionIndex++;
+            if (this.currentQuestionIndex < this.quizQuestions.length) {
+              this.loadQuestion();
+            } else {
+              this.completeQuiz();
+            }
           },
+
+          completeQuiz() {
+            this.quizCompleted = true;
+            this.updateFeedbackMessage();
+          },
+
+          updateFeedbackMessage() {
+            if (this.score >= 80) {
+              this.feedbackMessage = "Selamat kamu lulus!!!";
+            } else if (this.score >= 60) {
+              this.feedbackMessage = "aduh sedikit lagi, coba lagi yuk!";
+            } else {
+              this.feedbackMessage = "Jangan menyerah, coba belajar lagi yuk!";
+            }
+          },
+
+          restartQuiz() {
+            this.currentQuestionIndex = 0;
+            this.score = 0;
+            this.quizCompleted = false;
+            this.generateQuizQuestions();
+            this.loadQuestion();
+            this.petunjuk = false;
+          }
         };
       }
     </script>
