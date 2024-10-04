@@ -110,7 +110,9 @@
     x-transition:leave="transition-transform transform origin-top duration-500"
     x-transition:leave-start="translate-y-0"
     x-transition:leave-end="-translate-y-full">
-      <video controls autoplay src="../../img/TUTORIAL.mp4" class="mx-auto border-2 w-2/3 border-emerald-600 rounded-xl shadow-xl" @click.away="panduan = false"></video>
+      <video controls class="mx-auto border-2 w-2/3 border-emerald-600 rounded-xl shadow-xl" @click.away="panduan = false">
+        <source src="../../img/TUTORIAL.mp4" type="video/mp4">
+      </video>
       <!-- <img src="../../img/panduan.png" alt="" class="mx-auto border-2 border-emerald-600 rounded-xl shadow-xl" @click.away="panduan = false"> -->
     </div>
 
