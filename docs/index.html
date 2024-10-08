@@ -255,8 +255,7 @@
               <!-- Card -->
               <div class="bg-slate-400 rounded-2xl p-3 space-y-3">
                 <p class="text-sm md:text-[1rem] text-slate-900">
-                  karena alat ukur ini lebih presisi dari busur baja yang biasa dipakai. Banyak industri sekarang lebih sering menggunakan universal
-                  bevel protractor karena pengukurannya lebih akurat.
+                  karena alat ukur ini lebih presisi dari busur baja yang biasa dipakai dan ketelitiannya bisa mencapai 5 menit atau 0,0833°.
                 </p>
               </div>
               <!-- End Card -->
@@ -267,7 +266,7 @@
               <div class="grow text-end space-y-3">
                 <!-- Card -->
                 <div class="inline-block bg-blue-900 rounded-2xl p-3 shadow-sm">
-                  <p class="text-sm md:text-[1rem] text-slate-400">Emang alat ukur ini biasa digunain di industri min?</p>
+                  <p class="text-sm md:text-[1rem] text-slate-400">Alat ukur ini biasa digunakan di industri apa min?</p>
                 </div>
                 <!-- End Card -->
               </div>
@@ -287,37 +286,8 @@
               <!-- Card -->
               <div class="bg-slate-400 rounded-2xl p-3 space-y-3">
                 <p class="text-sm md:text-[1rem] text-slate-900">
-                  Ohh iya dong! Universal Bevel Protractor sering digunakan di industri Molding dan Sheet Metal untuk proses produksi.
+                  Universal Bevel Protractor biasa digunakan di industri Molding dan Sheet Metal untuk proses produksi.
                 </p>
-              </div>
-              <!-- End Card -->
-            </li>
-            <!-- End Chat Bubble -->
-            <!-- Chat -->
-            <li class="flex ms-auto gap-x-2 sm:gap-x-4">
-              <div class="grow text-end space-y-3">
-                <!-- Card -->
-                <div class="inline-block bg-blue-900 rounded-2xl p-3 shadow-sm">
-                  <p class="text-sm md:text-[1rem] text-slate-400">Oke deh min terimakasih 🙏</p>
-                </div>
-                <!-- End Card -->
-              </div>
-
-              <span class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
-                <span class="text-sm font-medium text-slate-400 leading-none">You</span>
-              </span>
-            </li>
-            <!-- End Chat -->
-
-            <!-- Chat Bubble -->
-            <li class="max-w-lg flex gap-x-2 sm:gap-x-4 me-11">
-              <span class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
-                <span class="text-sm font-medium text-slate-400 leading-none">Min</span>
-              </span>
-
-              <!-- Card -->
-              <div class="bg-slate-400 rounded-2xl p-3 space-y-3">
-                <p class="text-sm md:text-[1rem] text-slate-900">Okee semangat ya belajarnyaa!!! 🔥</p>
               </div>
               <!-- End Card -->
             </li>
@@ -339,16 +309,16 @@
               <!-- Konten Tim dengan animasi -->
               <template x-for="(item, index) in items" :key="index">
                 <div x-show="currentIndex === index" class="absolute inset-0 flex flex-col items-center justify-center carousel-content"
-                  x-transition:enter="transition ease-out duration-500"
+                  x-transition:enter="transition ease-out duration-1000"
                   x-transition:enter-start="opacity-0"
                   x-transition:enter-end="opacity-100"
-                  x-transition:leave="transition ease-in duration-500"
+                  x-transition:leave="transition ease-in duration-1000"
                   x-transition:leave-start="opacity-100"
                   x-transition:leave-end="opacity-0">
                   <img :src="item.image" alt="" class="mx-auto w-44 md:w-60">
                   <div class="bg-slate-900 text-slate-300 text-center py-3 absolute bottom-0 left-0 right-0 shadow-xl">
                     <h1 x-text="item.name" class="font-semibold sm:tracking-wider"></h1>
-                    <p x-text="item.role" class="font-thin sm:tracking-wider"></p>
+                    <p x-text="item.role" class="font-extralight sm:tracking-widest text-sm"></p>
                   </div>
                 </div>
               </template>
@@ -378,7 +348,7 @@
     <!-- Ini Footer ...................................................................................... -->
     <section id="footer" class="bg-slate-900 text-slate-400 py-2 border-t-2 border-emerald-600">
       <div class="container mx-auto relative z-0">
-        <div class="flex md:flex-row mx-auto justify-between gap-2 px-8 sm:w-3/4 md:w-4/5 lg:w-3/5">
+        <div class="flex md:flex-row justify-between md:justify-around gap-2 px-6 bg-pink-300">
           <!-- Contact Information -->
           <div class="">
             <h2 class="text-lg font-semibold mb-2 text-slate-400">Contact Us</h2>
@@ -415,12 +385,6 @@
             </div>
           </div>
         </div>
-        <div class="block lg:hidden">
-          <a
-            href="#"
-            class="absolute -top-5 right-1/2 -translate-y-[1.5px] w-6 h-6 bg-slate-900 border-t-2 border-s-2 border-emerald-600 rotate-45"></a>
-          <a href="#" class="absolute -top-5 right-1/2 translate-x-[5px] w-6 h-6 text-xs text-slate-400">up</a>
-        </div>
       </div>
       <div class="text-center border-t-[1px] border-emerald-600 py-1 w-full">
         <p class="text-sm">&copy; 2024 Bevel Simulator. All rights reserved.</p>
@@ -432,7 +396,7 @@
           return {
             currentIndex: 0,
             items: [
-              { name: 'Fauzan Novansyah', role: 'Mahasiswa - 2284200008', image: 'img/fauzan.jpg' },
+              { name: 'Fauzan Novansyah', role: 'Mahasiswa - Developer', image: 'img/fauzan.jpg' },
               { name: 'Ananda Yhuto Wibisono Putra, M.Pd.', role: 'Dosen - Pembimbing 1', image: 'img/yhuto.jpg' },
               { name: 'Haris Abizar M.Pd.', role: 'Dosen - Pembimbing 2', image: 'img/haris.jpg' }
             ],
