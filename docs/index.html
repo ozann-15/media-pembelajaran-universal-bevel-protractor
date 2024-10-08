@@ -327,121 +327,49 @@
         </div>
       </div>
     </section>
+
     <!-- INI OUR TEAM ........................................................................... -->
-    <section id="ourteam" class="bg-slate-400 w-full py-16">
-      <div class="mb-16 px-4 md:w-3/4 lg:w-2/3 mx-auto">
-        <h1 class="text-center font-bold text-3xl text-slate-900 md:text-4xl mb-4 underline">~~Our Teams~~</h1>
-      </div>
-      <div class="flex flex-col items-center justify-center px-2 mb-52" x-data="{ activeTab: 1, previousTab: 1 }">
-        <!-- Tabs Section -->
-        <nav
-          class="flex flex-row space-x-2 justify-center w-full sm:w-3/4 lg:w-1/2 mb-16"
-          aria-label="Tabs"
-          role="tablist"
-          aria-orientation="horizontal">
-          <!-- Tab 1 -->
-          <button
-            type="button"
-            :class="activeTab === 1 ? 'border-emerald-600 text-emerald-600' : 'border-transparent text-slate-900'"
-            class="hs-tab-active:border-emerald-600 py-2 px-4 border-b-2 text-lg font-bold whitespace-nowrap hover:text-emerald-600 focus:outline-none focus:text-emerald-600"
-            @click="previousTab = activeTab; activeTab = 1"
-            aria-selected="activeTab === 1"
-            role="tab">
-            Member 1
-          </button>
-
-          <!-- Tab 2 -->
-          <button
-            type="button"
-            :class="activeTab === 2 ? 'border-emerald-600 text-emerald-600' : 'border-transparent text-slate-900'"
-            class="hs-tab-active:border-blue-600 py-2 px-4 border-b-2 text-lg font-bold whitespace-nowrap hover:text-emerald-600 focus:outline-none focus:text-emerald-600"
-            @click="previousTab = activeTab; activeTab = 2"
-            aria-selected="activeTab === 2"
-            role="tab">
-            Member 2
-          </button>
-
-          <!-- Tab 3 -->
-          <button
-            type="button"
-            :class="activeTab === 3 ? 'border-emerald-600 text-emerald-600' : 'border-transparent text-slate-900'"
-            class="hs-tab-active:border-blue-600 py-2 px-4 border-b-2 text-lg font-bold whitespace-nowrap hover:text-emerald-600 focus:outline-none focus:text-emerald-600"
-            @click="previousTab = activeTab; activeTab = 3"
-            aria-selected="activeTab === 3"
-            role="tab">
-            Member 3
-          </button>
-        </nav>
-
-        <!-- Tab Content Section -->
-        <div class="relative w-full sm:w-3/4 md:w-2/3 lg:w-1/2 xl:w-2/5 text-center">
-          <!-- Tab Content Wrapper -->
-          <div class="flex flex-col space-y-4">
-            <!-- Tab Content 1 -->
-            <div
-              x-show="activeTab === 1"
-              x-transition:enter="transition-opacity ease-out duration-500"
-              x-transition:enter-start="opacity-0"
-              x-transition:enter-end="opacity-100"
-              x-transition:leave="transition-opacity ease-in duration-500"
-              x-transition:leave-start="opacity-100"
-              x-transition:leave-end="opacity-0"
-              class="bg-slate-900 text-slate-400 py-4 px-3 rounded-xl flex items-center justify-center"
-              aria-labelledby="tab-1">
-              <div class="flex items-center">
-                <div
-                  class="shrink-0 inline-flex items-center justify-center w-[80px] h-[80px] rounded-full bg-cover bg-center"
-                  style="background-image: url(img/fauzan.jpg)"></div>
-                <div class="text-start ps-4">
-                  <h1 class="text-emerald-600 text-lg md:text-xl font-semibold">Fauzan Novansyah - Pengembang</h1>
-                  <p class="text-sm md:text-base">Mahasiswa | 2284200008 | 2284200008@untirta.ac.id</p>
+    <section id="ourteam" class="bg-slate-400 w-full justify-center" x-data="carousel()">
+      <div class="container py-16 lg:py-32 sm:flex items-center justify-around lg:justify-evenly mx-auto">
+        <div>
+          <h1 class="text-start tracking-widest ps-6 sm:ps-0 font-extrabold text-5xl lg:text-7xl text-slate-900 mb-2">Meet <br> <span class="text-emerald-600">Our Teams</span></h1>
+         </div>
+        <div class="sm:w-1/2 lg:w-2/5 gap-8 h-96 relative mx-4 shadow-xl">
+          <div class="w-full carousel-container">
+              <!-- Konten Tim dengan animasi -->
+              <template x-for="(item, index) in items" :key="index">
+                <div x-show="currentIndex === index" class="absolute inset-0 flex flex-col items-center justify-center carousel-content"
+                  x-transition:enter="transition ease-out duration-500"
+                  x-transition:enter-start="opacity-0"
+                  x-transition:enter-end="opacity-100"
+                  x-transition:leave="transition ease-in duration-500"
+                  x-transition:leave-start="opacity-100"
+                  x-transition:leave-end="opacity-0">
+                  <img :src="item.image" alt="" class="mx-auto w-44 md:w-60">
+                  <div class="bg-slate-900 text-slate-300 text-center py-3 absolute bottom-0 left-0 right-0 shadow-xl">
+                    <h1 x-text="item.name" class="font-semibold sm:tracking-wider"></h1>
+                    <p x-text="item.role" class="font-thin sm:tracking-wider"></p>
+                  </div>
                 </div>
-              </div>
-            </div>
+              </template>
 
-            <!-- Tab Content 2 -->
-            <div
-              x-show="activeTab === 2"
-              x-transition:enter="transition-opacity ease-out duration-500"
-              x-transition:enter-start="opacity-0"
-              x-transition:enter-end="opacity-100"
-              x-transition:leave="transition-opacity ease-in duration-500"
-              x-transition:leave-start="opacity-100"
-              x-transition:leave-end="opacity-0"
-              class="bg-slate-900 text-slate-400 py-4 px-3 rounded-xl flex items-center justify-center"
-              aria-labelledby="tab-2">
-              <div class="flex items-center">
-                <div
-                  class="shrink-0 inline-flex items-center justify-center w-[80px] h-[80px] rounded-full bg-cover bg-center"
-                  style="background-image: url(img/yhuto.jpg)"></div>
-                <div class="text-start ps-4">
-                  <h1 class="text-emerald-600 text-lg sm:text-xl font-semibold">Ananda Yhuto W - Pembimbing 1</h1>
-                  <p class="text-sm sm:text-base">Dosen | 199302272022031003 | wyhuto@untirta.ac.id</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Tab Content 3 -->
-            <div
-              x-show="activeTab === 3"
-              x-transition:enter="transition-opacity ease-out duration-500"
-              x-transition:enter-start="opacity-0"
-              x-transition:enter-end="opacity-100"
-              x-transition:leave="transition-opacity ease-in duration-500"
-              x-transition:leave-start="opacity-100"
-              x-transition:leave-end="opacity-0"
-              class="bg-slate-900 text-slate-400 py-4 px-3 rounded-xl flex items-center justify-center"
-              aria-labelledby="tab-3">
-              <div class="flex items-center">
-                <div
-                  class="shrink-0 inline-flex items-center justify-center w-[80px] h-[80px] rounded-full bg-cover bg-center"
-                  style="background-image: url(img/haris.jpg)"></div>
-                <div class="text-start ps-4">
-                  <h1 class="text-emerald-600 text-lg md:text-xl font-semibold">Haris Abizar - Pembimbing 2</h1>
-                  <p class="text-sm md:text-base">Dosen | 198610062019031008 | harisabizar@untirta.ac.id</p>
-                </div>
-              </div>
-            </div>
+              <!-- Tombol Previous -->
+              <button @click="prev()" class="z-10 absolute top-1/2 -translate-y-1/2 left-1">
+                <span class="inline-flex bg-gray-950 bg-opacity-20 items-center justify-center p-3 md:w-10 md:h-10 rounded-full hover:bg-opacity-70">
+                  <svg class="w-4 h-4 md:w-4 md:h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
+                  </svg>
+                </span>
+              </button>
+      
+              <!-- Tombol Next -->
+              <button @click="next()" class="z-10 absolute top-1/2 -translate-y-1/2 right-1">
+                <span class="inline-flex bg-gray-950 bg-opacity-20 items-center justify-center p-3 md:w-10 md:h-10 rounded-full hover:bg-opacity-70">
+                  <svg class="w-4 h-4 md:w-4 md:h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
+                  </svg>
+                </span>
+              </button>
           </div>
         </div>
       </div>
@@ -499,6 +427,24 @@
       </div>
     </section>
 
-    <script src="./node_modules/preline/dist/preline.js"></script>
+      <script>
+        function carousel() {
+          return {
+            currentIndex: 0,
+            items: [
+              { name: 'Fauzan Novansyah', role: 'Mahasiswa - 2284200008', image: 'img/fauzan.jpg' },
+              { name: 'Ananda Yhuto Wibisono Putra, M.Pd.', role: 'Dosen - Pembimbing 1', image: 'img/yhuto.jpg' },
+              { name: 'Haris Abizar M.Pd.', role: 'Dosen - Pembimbing 2', image: 'img/haris.jpg' }
+            ],
+            next() {
+              this.currentIndex = (this.currentIndex + 1) % this.items.length;
+            },
+            prev() {
+              this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
+            }
+          }
+        }
+      </script>
+      <script src="./node_modules/preline/dist/preline.js"></script>
   </body>
 </html>

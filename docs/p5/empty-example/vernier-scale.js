@@ -7,7 +7,7 @@ class VernierScale {
     this.textSize = textSize;
   }
   render() {
-    strokeWeight(windowHeight * 0.001);
+    strokeWeight(windowHeight * 0.0008);
     // Draw the bottom bevel
     fill(210); // Darker shade for the bottom bevel
     circle(0, 0, this.circleRadius);

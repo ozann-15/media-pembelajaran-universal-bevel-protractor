@@ -38,7 +38,7 @@
             <!-- Navbar Links (Desktop) -->
             <div class="flex gap-2 sm:gap-8">
               <div class="relative" x-data={open:false}>
-                <a @click="open=!open" class="flex items-center px-2 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">
+                <a @click="open=!open" class="flex items-center px-2 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded cursor-pointer">
                   Features 
                   <svg class="hs-dropdown-open:rotate-180 size-4 ms-1 mt-1" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
                 </a>
@@ -74,19 +74,19 @@
           x-data="quizData()">
           <div id="question-container" x-cloak class="text-center w-full">
             <!-- Progress bar -->
-            <div class="mb-1">
+            <div class="">
               <div class="relative w-full h-4 bg-gray-200 rounded-full overflow-hidden" role="progressbar" :aria-valuenow="score" aria-valuemin="0" aria-valuemax="100">
                 <div class="absolute inset-0 flex">
-                  <div class="overflow-hidden bg-blue-600 text-xs text-white text-center whitespace-nowrap transition duration-500" :style="'width: ' + score + '%'" x-text="score + '%'" style="direction: ltr;"></div>
+                  <div class="overflow-hidden bg-emerald-600 text-xs text-white text-center whitespace-nowrap transition duration-500" :style="'width: ' + score + '%'" x-text="score + '%'" style="direction: ltr;"></div>
                 </div>
                 <div class="absolute inset-0 flex justify-end">
-                  <div class="overflow-hidden bg-pink-800 text-xs text-white text-center whitespace-nowrap transition duration-500" :style="'width: ' + salah + '%'" x-text="salah + '%'" style="direction: rtl;"></div>
+                  <div class="overflow-hidden bg-red-900 text-xs text-white text-center whitespace-nowrap transition duration-500" :style="'width: ' + salah + '%'" x-text="salah + '%'" style="direction: rtl;"></div>
                 </div>
               </div>
             </div>
             
             <!-- Menampilkan gambar soal -->
-            <div class="px-2 inline-block font-semibold">soal ke <span x-text="soal" class="font-bold text-xl"></span> / 10</div>
+            <div class="p-2 font-sans inline-block font-medium md:text-lg tracking-widest">soal ke <span x-text="soal" class="font-extrabold text-xl"></span> / 10</div>
             <figure class="p-0 m-0 relative" x-data="{open:false}" x-show="!showAnswer">
               <img :src="currentImage" alt="Soal" 
               class="mx-auto mb-2 rounded-3xl shadow-xl animate__animated animate__backInDowns sm:w-3/4" />
@@ -130,7 +130,7 @@
             <div x-show="!showAnswer" x-cloak>
               <!-- Tampilan input untuk soal isian -->
               <template x-if="currentQuestionType === 'input'">
-                <div>
+                <div class="mx-auto w-full sm:w-3/4">
                   <h1 class="text-xs sm:text-base font-sans font-bold">Berapa hasil pengukuran gambar diatas?</h1>
                   <h1 class="text-xs sm:text-base font-sans font-semibold mb-2">contoh jawaban (10 15')</h1>
                   <input
@@ -140,21 +140,38 @@
                     class="border border-gray-300 p-2 rounded mb-4 w-full"
                     x-model="userAnswer"
                     @keydown.enter="checkAnswer()" />
-                  <button @click="checkAnswer()" class="bg-slate-900 text-slate-400 p-2 rounded shadow-lg">Kirim Jawaban</button>
+                  <button 
+                    @click="checkAnswer()" 
+                    class="bg-slate-900 text-slate-400 p-2 rounded shadow-lg"
+                    :class="{ 'opacity-50 cursor-not-allowed': !userAnswer.trim() }"
+                    :disabled="!userAnswer.trim()"
+                  >
+                    Kirim Jawaban
+                  </button>
                 </div>
               </template>
 
               <!-- Tampilan pilihan ganda -->
               <template x-if="currentQuestionType === 'multiple-choice'">
                 <div class="mx-auto w-full sm:w-3/4">
-                  <template x-for="(option, index) in options" :key="index">
-                    <div class="flex gap-2 mt-4 justify-start items-center text-sm text-start md:ms-8 lg:ms-12">
-                      <!-- Gunakan atribut 'name' untuk memisahkan soal, misal menggunakan 'soal' sebagai identifier -->
-                      <input class="border-none checked:bg-white" type="radio" :id="'option-' + soal + '-' + index" :name="'question-' + soal" :value="option" x-model="selectedOption" @click="selectOption(option)" />
-                      <label :for="'option-' + soal + '-' + index" x-text="option" class="text-slate-900 "></label>
-                    </div>
-                  </template>
-                  <button @click="checkAnswer()" class="bg-slate-900 text-slate-400 p-2 rounded mt-2 shadow-lg">Kirim Jawaban</button>
+                  <div class="flex flex-col gap-2 mt-4">
+                    <template x-for="(option, index) in options" :key="index">
+                      <button 
+                        class="p-2 text-sm md:text-base text-start rounded shadow-md transition-colors duration-200 ease-in-out"
+                        :class="selectedOption === option ? 'shadow-none bg-slate-200/30 text-slate-900' : 'bg-slate-200/60 text-slate-900 hover:bg-slate-200/95'"
+                        @click="selectOption(option)"
+                        x-text="option"
+                      ></button>
+                    </template>
+                  </div>
+                  <button 
+                    @click="checkAnswer()" 
+                    class="bg-slate-900 text-slate-400 p-2 rounded mt-4 shadow-lg hover:bg-slate-800 transition-colors duration-200 ease-in-out"
+                    :class="{ 'opacity-50 cursor-not-allowed': !selectedOption }"
+                    :disabled="!selectedOption"
+                  >
+                    Kirim Jawaban
+                  </button>
                 </div>
               </template>
             </div>
@@ -170,7 +187,7 @@
 
           <!-- Modal untuk jawaban salah -->
           <div x-show="isIncorrect" x-cloak class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 modal">
-            <div class="bg-slate-400 p-6 rounded-lg shadow-lg w-80 text-center border-4 border-pink-800 animate__animated animate__shakeX animate__faster">
+            <div class="bg-slate-400 p-6 rounded-lg shadow-lg w-80 text-center border-4 border-red-900 animate__animated animate__shakeX animate__faster">
               <p class="mb-4">Jawaban Anda salah.</p>
                 <button @click="showAnswerModal()" class="bg-slate-900 text-slate-400 p-2 rounded">Lihat Jawaban</button>
             </div>
@@ -188,12 +205,12 @@
           </div>
 
           <!-- Modal Petunjuk Pengerjaan -->
-          <div x-show="petunjuk" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 modal px-2">
-            <div class="bg-slate-400 border-4 border-emerald-600 shadow-md rounded-lg p-4 w-96 animate__animated animate__zoomInDown">
+          <div x-show="petunjuk" class="absolute z-50 flex items-center justify-center modal px-2">
+            <div class="bg-slate-400 bg-opacity-95 shadow-2xl shadow-black rounded-lg p-4 w-96 lg:w-[40rem] lg:p-8 animate__animated animate__zoomInDown">
               <h1 class="text-lg font-bold text-slate-900 mb-2">Petunjuk Pengerjaan</h1>
         
-              <ol class="list-decimal ml-5 text-slate-900 space-y-2">
-                <li class="text-xs md:text-sm">
+              <ol class="list-decimal ml-5 text-slate-900 space-y-2 text-xs md:text-sm lg:text-lg">
+                <li class="">
                   <span class="font-semibold">Total Soal: 10</span>
                   <p>Terdapat 3 jenis soal yang perlu dikerjakan:</p>
                   <ul class="list-disc ml-6">
@@ -203,11 +220,11 @@
                   </ul>
                 </li>
         
-                <li class="text-xs md:text-sm">
+                <li class="">
                   <span class="">Setiap soal bernilai <span class="font-semibold">10 poin.</span> Dengan Nilai Minimum Kelulusan  <span class="font-semibold">70.</span></span>
                 </li>
         
-                <li class="text-xs md:text-sm">
+                <li class="">
                   Pastikan kamu memahami setiap soal dengan baik sebelum menjawab. jika belum siap, silakan belajar lagi pada menu 
                   <a href="materi.html" class="font-semibold underline hover:text-emerald-600 transition duration-300">Materi</a> dan latihan pada menu 
                   <a href="p5/empty-example/Simulator.html" class="font-semibold underline hover:text-emerald-600 transition duration-300">Simulator.</a> GoodLuck!!!
