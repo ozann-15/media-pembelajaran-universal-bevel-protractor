@@ -283,7 +283,7 @@ function mouseReleased() {
 }
 
 function isMouseInDiscArea() {
-  let discRadius = windowHeight * 0.35; // Setengah dari diameter disc
+  let discRadius = windowHeight * 0.41; // Setengah dari diameter disc
   let d = dist(mouseX, mouseY, discCenterX, discCenterY);
   return d < discRadius;
 }
