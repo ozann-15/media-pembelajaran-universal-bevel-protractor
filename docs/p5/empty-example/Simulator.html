@@ -36,7 +36,7 @@
         align-items: center;
         font-size: 1.5em;
         text-align: center;
-        z-index: 20;
+        z-index: 30;
         transition: opacity 0.5s ease; /* Smooth fade out */
       }
 
@@ -62,7 +62,12 @@
   </head>
 
   <body class="bg-slate-900 relative" x-data="{ panduan: false }">
-    <div id="orientationWarning" x-cloak>Silakan gunakan mode landscape</div>
+    <div id="orientationWarning" x-cloak class="flex flex-col">
+      <div class="">
+        <img src="../../rotate.gif" alt="" class="w-full px-28">
+      </div>
+      Silakan gunakan mode landscape
+    </div>
 
     <section class="w-full bg-slate-900" >
       <div class="mx-auto">

@@ -104,16 +104,16 @@ function draw() {
     fill(100);
     circle(0, 0 + windowHeight * 0.25 + windowHeight * 0.075, windowHeight * 0.088, 0);
     fill(999);
-    textSize(windowHeight * 0.02);
-    text("Locked", 0, 0 + windowHeight * 0.25 + windowHeight * 0.075);
+    textSize(windowHeight * 0.025);
+    text("Unlock", 0, 0 + windowHeight * 0.25 + windowHeight * 0.075);
     pop();
   }
   if (toggleDisc) {
     fill(120);
     circle(0, 0, windowHeight * 0.11, 0);
     fill(999);
-    textSize(windowHeight * 0.02);
-    text("Locked", 0, 0);
+    textSize(windowHeight * 0.025);
+    text("Unlock", 0, 0);
     pop();
   }
 

@@ -1223,9 +1223,9 @@ input:checked + .toggle-bg {
   margin: 0.25rem;
 }
 
-.mx-2 {
-  margin-left: 0.5rem;
-  margin-right: 0.5rem;
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
 }
 
 .mx-4 {
@@ -1241,11 +1241,6 @@ input:checked + .toggle-bg {
 .my-2 {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
-}
-
-.mx-3 {
-  margin-left: 0.75rem;
-  margin-right: 0.75rem;
 }
 
 .mb-1 {
@@ -2101,6 +2096,11 @@ input:checked + .toggle-bg {
 .px-2 {
   padding-left: 0.5rem;
   padding-right: 0.5rem;
+}
+
+.px-28 {
+  padding-left: 7rem;
+  padding-right: 7rem;
 }
 
 .px-3 {
@@ -3130,10 +3130,6 @@ input:checked + .toggle-bg {
     width: 15rem;
   }
 
-  .md\:w-1\/2 {
-    width: 50%;
-  }
-
   .md\:flex-row {
     flex-direction: row;
   }
@@ -3213,10 +3209,6 @@ input:checked + .toggle-bg {
 
   .lg\:w-3\/5 {
     width: 60%;
-  }
-
-  .lg\:w-\[40rem\] {
-    width: 40rem;
   }
 
   .lg\:items-center {
