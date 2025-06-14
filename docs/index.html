@@ -5,44 +5,81 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Bevel Protractor Simulator</title>
     <link href="output.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.0/dist/cdn.min.js" defer></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.0.0/dist/cdn.min.js"
+      defer></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
   </head>
   <body>
     <section>
       <!-- Navbar -->
       <div class="container">
-        <nav class="bg-slate-900 border-b-[1px] border-emerald-600 py-4 fixed w-full top-0 left-0 z-50" x-data="{ open: false }">
-          <div class="container mx-auto flex items-center justify-between px-6 lg:px-16">
+        <nav
+          class="bg-slate-900 border-b-[1px] border-emerald-600 py-4 fixed w-full top-0 left-0 z-50"
+          x-data="{ open: false }">
+          <div
+            class="container mx-auto flex items-center justify-between px-6 lg:px-16">
             <!-- Brand Name -->
-            <a href="#" class="text-2xl font-bold text-emerald-600 md:text-3xl italic">Bevel Simulator</a>
+            <a
+              href="#"
+              class="text-2xl font-bold text-emerald-600 md:text-3xl italic"
+              >Bevel Simulator</a
+            >
 
             <!-- Menu Toggle Button (for mobile and tablet) -->
-            <button @click="open = !open" class="lg:hidden text-emerald-600 focus:outline-none">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            <button
+              @click="open = !open"
+              class="lg:hidden text-emerald-600 focus:outline-none">
+              <svg
+                class="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h16m-7 6h7"></path>
               </svg>
             </button>
 
             <!-- Navbar Links (Desktop) -->
             <div class="hidden lg:flex lg:items-center lg:space-x-6">
-              <a href="#" class="block px-3 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">Home</a>
-              <a @click="open=!open" href="#fitur" class="block px-3 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">
+              <a
+                href="#"
+                class="block px-3 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded"
+                >Home</a
+              >
+              <a
+                @click="open=!open"
+                href="#fitur"
+                class="block px-3 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">
                 Our Features
               </a>
-              <a href="#qna" class="block px-3 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">QnA</a>
-              <a href="#ourteam" class="block px-3 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">
+              <a
+                href="#qna"
+                class="block px-3 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded"
+                >QnA</a
+              >
+              <a
+                href="#ourteam"
+                class="block px-3 py-1 lg:text-xl text-slate-400 hover:bg-slate-400 hover:text-slate-900 font-bold rounded">
                 Our Teams
               </a>
             </div>
           </div>
-          
+
           <!-- Dropdown Menu for Mobile and Tablet -->
           <div
             x-show="open"
@@ -54,10 +91,26 @@
             x-transition:leave-start="translate-x-0"
             x-transition:leave-end="translate-x-full"
             class="lg:hidden fixed top-19 py-5 left-0 w-full bg-slate-900 opacity-90 text-slate-400 shadow-lg z-10">
-            <a href="#" class="block mx-auto px-2 py-2 hover:bg-slate-800 hover:rounded-xl w-11/12">Home</a>
-            <a href="#fitur" class="block mx-auto px-2 py-2 hover:bg-slate-800 hover:rounded-xl w-11/12">Our Features</a>
-            <a href="#qna" class="block mx-auto px-2 py-2 hover:bg-slate-800 hover:rounded-xl w-11/12">QnA</a>
-            <a href="#ourteam" class="block mx-auto px-2 py-2 hover:bg-slate-800 hover:rounded-xl w-11/12">Our Teams</a>
+            <a
+              href="#"
+              class="block mx-auto px-2 py-2 hover:bg-slate-800 hover:rounded-xl w-11/12"
+              >Home</a
+            >
+            <a
+              href="#fitur"
+              class="block mx-auto px-2 py-2 hover:bg-slate-800 hover:rounded-xl w-11/12"
+              >Our Features</a
+            >
+            <a
+              href="#qna"
+              class="block mx-auto px-2 py-2 hover:bg-slate-800 hover:rounded-xl w-11/12"
+              >QnA</a
+            >
+            <a
+              href="#ourteam"
+              class="block mx-auto px-2 py-2 hover:bg-slate-800 hover:rounded-xl w-11/12"
+              >Our Teams</a
+            >
           </div>
         </nav>
       </div>
@@ -65,15 +118,17 @@
 
     <!-- INI HERO SECTION .............................................................................. -->
     <section id="#" class="hero bg-slate-900 w-full py-48">
-      <div class="container mx-auto flex flex-wrap items-center justify-center gap-8">
+      <div
+        class="container mx-auto flex flex-wrap items-center justify-center gap-8">
         <div class="px-8 text-center lg:w-1/2 justify-center">
           <h1 class="text-slate-400 text-3xl font-bold mb-4">
             <span class="text-emerald-600">Simulator</span>
             Universal Bevel Protractor
           </h1>
           <p class="text-slate-500 text-sm md:text-lg">
-            Website ini adalah sebuah media pembelajaran untuk membantu kamu belajar serta memahami cara kerja universal bevel protractor dengan cara
-            yang mudah dan menyenangkan.
+            Website ini adalah sebuah media pembelajaran untuk membantu kamu
+            belajar serta memahami cara kerja universal bevel protractor dengan
+            cara yang mudah dan menyenangkan.
           </p>
           <a
             href="#fitur"
@@ -82,10 +137,11 @@
             Yuk, Mulai Belajar!
           </a>
           <a
-          href="img/modul.html" target="_blank"
-          type="button"
-          class="mt-4 py-2 px-4 mx-4 inline-flex items-center gap-x-2 text-sm font-bold rounded-lg border border-emerald-600 text-slate-900 hover:border-xl bg-emerald-600 hover:border-slate-900 hover:bg-emerald-600 hover:text-slate-900 focus:outline-none focus:border-gray-500 focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:bordslatetext-slate-900 dark:hover:text-neutral-300 dark:hover:border-neutral-300">
-          Modul Ajar
+            href="img/modul.html"
+            target="_blank"
+            type="button"
+            class="mt-4 py-2 px-4 mx-4 inline-flex items-center gap-x-2 text-sm font-bold rounded-lg border border-emerald-600 text-slate-900 hover:border-xl bg-emerald-600 hover:border-slate-900 hover:bg-emerald-600 hover:text-slate-900 focus:outline-none focus:border-gray-500 focus:text-gray-500 disabled:opacity-50 disabled:pointer-events-none dark:bordslatetext-slate-900 dark:hover:text-neutral-300 dark:hover:border-neutral-300">
+            Modul Ajar
           </a>
         </div>
         <div
@@ -98,36 +154,51 @@
     <section id="fitur" class="fitur bg-slate-400 flex justify-center py-12">
       <div class="container py-8">
         <div class="mb-16 px-4 md:w-3/4 lg:w-2/3 mx-auto">
-          <h1 class="text-center font-bold text-3xl text-slate-900 md:text-4xl mb-4">Our Feature</h1>
+          <h1
+            class="text-center font-bold text-3xl text-slate-900 md:text-4xl mb-4">
+            Our Feature
+          </h1>
           <p class="text-center text-slate-900 text-sm md:text-lg">
-            Website ini menyediakan berbagai fitur pembelajaran interaktif yang dirancang untuk membantu kamu memahami universal bevel protractor.
-            Mulailah dari materi ajar, simulator, hingga latihan soal untuk menguji pemahaman
+            Website ini menyediakan berbagai fitur pembelajaran interaktif yang
+            dirancang untuk membantu kamu memahami universal bevel protractor.
+            Mulailah dari materi ajar, simulator, hingga latihan soal untuk
+            menguji pemahaman
           </p>
         </div>
-        <div class="mx-auto px-2 flex justify-center items-center w-full sm:w-3/4 lg:w-2/3">
+        <div
+          class="mx-auto px-2 flex justify-center items-center w-full sm:w-3/4 lg:w-2/3">
           <!-- Timeline -->
           <div>
-            <h2 class="text-center mb-8 gap-x-1.5 text-xl md:text-2xl font-bold text-slate-900 underline underline-offset-8">
+            <h2
+              class="text-center mb-8 gap-x-1.5 text-xl md:text-2xl font-bold text-slate-900 underline underline-offset-8">
               --Timeline Learning--
             </h2>
             <!-- Item -->
-            <div class="flex gap-x-3 relative group rounded-2xl hover:bg-slate-900">
+            <div
+              class="flex gap-x-3 relative group rounded-2xl hover:bg-slate-900">
               <a class="absolute inset-0 z-[1]" href="materi.html"></a>
 
               <!-- Icon -->
               <div
                 class="relative last:after:hidden after:absolute after:top-0 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200">
-                <div class="relative z-10 size-7 flex justify-center items-center">
-                  <div class="mt-8 size-2 rounded-full bg-white border-2 border-gray-300 group-hover:border-gray-600"></div>
+                <div
+                  class="relative z-10 size-7 flex justify-center items-center">
+                  <div
+                    class="mt-8 size-2 rounded-full bg-white border-2 border-gray-300 group-hover:border-gray-600"></div>
                 </div>
               </div>
               <!-- End Icon -->
 
               <!-- Right Content -->
-              <div class="p-2 pb-8 ">
-                <h3 class="inline-block rounded-md gap-x-1.5 text-base md:text-xl font-semibold text-slate-900 p-1 px-4 border-slate-900 border-2 group-hover:border-[1px] group-hover:text-emerald-600 group-hover:border-emerald-600">Materi dan Tutorial 📚</h3>
-                <p class="mt-2 text-sm md:text-[1rem] lg:text-lg text-slate-900 group-hover:text-slate-400">
-                  Sebelum kamu memulai menggunakan bevel protractor, pelajari dulu konsep dasarnya. Siap untuk memulai petualangan belajar?
+              <div class="p-2 pb-8">
+                <h3
+                  class="inline-block rounded-md gap-x-1.5 text-base md:text-xl font-semibold text-slate-900 p-1 px-4 border-slate-900 border-2 group-hover:border-[1px] group-hover:text-emerald-600 group-hover:border-emerald-600">
+                  Materi dan Tutorial 📚
+                </h3>
+                <p
+                  class="mt-2 text-sm md:text-[1rem] lg:text-lg text-slate-900 group-hover:text-slate-400">
+                  Sebelum kamu memulai menggunakan bevel protractor, pelajari
+                  dulu konsep dasarnya. Siap untuk memulai petualangan belajar?
                 </p>
               </div>
               <!-- End Right Content -->
@@ -135,23 +206,33 @@
             <!-- End Item -->
 
             <!-- Item -->
-            <div class="flex gap-x-3 relative group rounded-2xl hover:bg-slate-900 dark:hover:bg-white/10">
-              <a class="absolute inset-0 z-[1]" href="p5/empty-example/Simulator.html"></a>
+            <div
+              class="flex gap-x-3 relative group rounded-2xl hover:bg-slate-900 dark:hover:bg-white/10">
+              <a
+                class="absolute inset-0 z-[1]"
+                href="p5/empty-example/Simulator.html"></a>
 
               <!-- Icon -->
               <div
                 class="relative last:after:hidden after:absolute after:top-0 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200">
-                <div class="relative z-10 size-7 flex justify-center items-center">
-                  <div class="mt-8 size-2 rounded-full bg-white border-2 border-gray-300 group-hover:border-gray-600"></div>
+                <div
+                  class="relative z-10 size-7 flex justify-center items-center">
+                  <div
+                    class="mt-8 size-2 rounded-full bg-white border-2 border-gray-300 group-hover:border-gray-600"></div>
                 </div>
               </div>
               <!-- End Icon -->
 
               <!-- Right Content -->
               <div class="grow p-2 pb-8">
-                <h3 class="inline-block rounded-md gap-x-1.5 text-base md:text-xl font-semibold text-slate-900 p-1 px-4 border-slate-900 border-2 group-hover:border-[1px] group-hover:text-emerald-600 group-hover:border-emerald-600">Simulator 🎮</h3>
-                <p class="mt-2 text-sm md:text-[1rem] lg:text-xl text-slate-900 group-hover:text-slate-400">
-                  Waktunya untuk menguji pemahamanmu! Latihan ini akan membuatmu lebih memahami universal bevel protractor. let's fun the game!
+                <h3
+                  class="inline-block rounded-md gap-x-1.5 text-base md:text-xl font-semibold text-slate-900 p-1 px-4 border-slate-900 border-2 group-hover:border-[1px] group-hover:text-emerald-600 group-hover:border-emerald-600">
+                  Simulator 🎮
+                </h3>
+                <p
+                  class="mt-2 text-sm md:text-[1rem] lg:text-xl text-slate-900 group-hover:text-slate-400">
+                  Waktunya untuk menguji pemahamanmu! Latihan ini akan membuatmu
+                  lebih memahami universal bevel protractor. let's fun the game!
                 </p>
               </div>
               <!-- End Right Content -->
@@ -159,23 +240,32 @@
             <!-- End Item -->
 
             <!-- Item -->
-            <div class="flex gap-x-3 relative group rounded-2xl hover:bg-slate-900 dark:hover:bg-white/10">
+            <div
+              class="flex gap-x-3 relative group rounded-2xl hover:bg-slate-900 dark:hover:bg-white/10">
               <a class="absolute inset-0 z-[1]" href="latihan.html"></a>
 
               <!-- Icon -->
               <div
                 class="relative last:after:hidden after:absolute after:top-0 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200">
-                <div class="relative z-10 size-7 flex justify-center items-center">
-                  <div class="mt-8 size-2 rounded-full bg-white border-2 border-gray-300 group-hover:border-gray-600"></div>
+                <div
+                  class="relative z-10 size-7 flex justify-center items-center">
+                  <div
+                    class="mt-8 size-2 rounded-full bg-white border-2 border-gray-300 group-hover:border-gray-600"></div>
                 </div>
               </div>
               <!-- End Icon -->
 
               <!-- Right Content -->
               <div class="grow p-2 pb-8">
-                <h3 class="inline-block rounded-md gap-x-1.5 text-base md:text-xl font-semibold text-slate-900 p-1 px-4 border-slate-900 border-2 group-hover:border-[1px] group-hover:text-emerald-600 group-hover:border-emerald-600">Latihan Soal 📜</h3>
-                <p class="mt-2 text-sm md:text-[1rem] lg:text-xl text-slate-900 group-hover:text-slate-400">
-                  Seberapa baik pemahamanmu? Coba jawab soal-soal ini untuk mengetahui seberapa jauh kamu telah menguasai bevel protractor. GoodLuck!
+                <h3
+                  class="inline-block rounded-md gap-x-1.5 text-base md:text-xl font-semibold text-slate-900 p-1 px-4 border-slate-900 border-2 group-hover:border-[1px] group-hover:text-emerald-600 group-hover:border-emerald-600">
+                  Latihan Soal 📜
+                </h3>
+                <p
+                  class="mt-2 text-sm md:text-[1rem] lg:text-xl text-slate-900 group-hover:text-slate-400">
+                  Seberapa baik pemahamanmu? Coba jawab soal-soal ini untuk
+                  mengetahui seberapa jauh kamu telah menguasai bevel
+                  protractor. GoodLuck!
                 </p>
               </div>
               <!-- End Right Content -->
@@ -191,13 +281,15 @@
     <section id="qna" class="info bg-slate-900 w-full py-12">
       <div class="container py-8 px-4 mx-auto">
         <div class="mb-12 px-4 md:w-3/4 mx-auto">
-          <h1 class="text-center font-bold text-3xl text-slate-400 md:text-4xl mb-4">
+          <h1
+            class="text-center font-bold text-3xl text-slate-400 md:text-4xl mb-4">
             Questions
             <span class="text-emerald-600">and</span>
             Answers
           </h1>
           <p class="text-center font-normal text-slate-400 text-sm md:text-lg">
-            Temukan jawaban dari pertanyaan-pertanyaan yang sering ditanyakan tentang universal bevel protractor. Simak bagian ini untuk menemukan
+            Temukan jawaban dari pertanyaan-pertanyaan yang sering ditanyakan
+            tentang universal bevel protractor. Simak bagian ini untuk menemukan
             jawaban dari pertanyaan-pertanyaan yang sering ditanyakan!
           </p>
         </div>
@@ -209,27 +301,36 @@
               <div class="grow text-end space-y-3">
                 <!-- Card -->
                 <div class="inline-block bg-blue-900 rounded-2xl p-3 shadow-sm">
-                  <p class="text-sm md:text-[1rem] text-slate-400">Min, apa sih itu Universal Bevel Protractor? 🙋‍♂️</p>
+                  <p class="text-sm md:text-[1rem] text-slate-400">
+                    Min, apa sih itu Universal Bevel Protractor? 🙋‍♂️
+                  </p>
                 </div>
                 <!-- End Card -->
               </div>
 
-              <span class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
-                <span class="text-sm font-medium text-slate-400 leading-none">You</span>
+              <span
+                class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
+                <span class="text-sm font-medium text-slate-400 leading-none"
+                  >You</span
+                >
               </span>
             </li>
             <!-- End Chat -->
             <!-- Chat -->
             <li class="max-w-lg flex gap-x-2 sm:gap-x-4 me-11">
-              <span class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
-                <span class="text-sm font-medium text-slate-400 leading-none">Min</span>
+              <span
+                class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
+                <span class="text-sm font-medium text-slate-400 leading-none"
+                  >Min</span
+                >
               </span>
 
               <!-- Card -->
               <div class="bg-slate-400 rounded-2xl p-3 space-y-3">
                 <div class="space-y-1.5">
                   <p class="text-sm md:text-[1rem] mb-1.5 text-slate-900">
-                    Universal Bevel protractor adalah alat ukur yang digunakan untuk mengukur dan menentukan sudut dengan sangat akurat.
+                    Universal Bevel protractor adalah alat ukur yang digunakan
+                    untuk mengukur dan menentukan sudut dengan sangat akurat.
                   </p>
                 </div>
               </div>
@@ -242,27 +343,36 @@
               <div class="grow text-end space-y-3">
                 <!-- Card -->
                 <div class="inline-block bg-blue-900 rounded-2xl p-3 shadow-sm">
-                  <p class="text-sm md:text-[1rem] text-slate-400">Kenapa saya harus belajar alat ukur ini? 🤷‍♂️</p>
+                  <p class="text-sm md:text-[1rem] text-slate-400">
+                    Kenapa saya harus belajar alat ukur ini? 🤷‍♂️
+                  </p>
                 </div>
                 <!-- End Card -->
               </div>
 
-              <span class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
-                <span class="text-sm font-medium text-slate-400 leading-none">You</span>
+              <span
+                class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
+                <span class="text-sm font-medium text-slate-400 leading-none"
+                  >You</span
+                >
               </span>
             </li>
             <!-- End Chat -->
 
             <!-- Chat Bubble -->
             <li class="max-w-lg flex gap-x-2 sm:gap-x-4 me-11">
-              <span class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
-                <span class="text-sm font-medium text-slate-400 leading-none">Min</span>
+              <span
+                class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
+                <span class="text-sm font-medium text-slate-400 leading-none"
+                  >Min</span
+                >
               </span>
 
               <!-- Card -->
               <div class="bg-slate-400 rounded-2xl p-3 space-y-3">
                 <p class="text-sm md:text-[1rem] text-slate-900">
-                  karena alat ukur ini lebih presisi dari busur baja yang biasa dipakai dan ketelitiannya bisa mencapai 5 menit atau 0,0833°.
+                  karena alat ukur ini lebih presisi dari busur baja yang biasa
+                  dipakai dan ketelitiannya bisa mencapai 5 menit atau 0,0833°.
                 </p>
               </div>
               <!-- End Card -->
@@ -273,27 +383,36 @@
               <div class="grow text-end space-y-3">
                 <!-- Card -->
                 <div class="inline-block bg-blue-900 rounded-2xl p-3 shadow-sm">
-                  <p class="text-sm md:text-[1rem] text-slate-400">Alat ukur ini biasa digunakan di industri apa min?</p>
+                  <p class="text-sm md:text-[1rem] text-slate-400">
+                    Alat ukur ini biasa digunakan di industri apa min?
+                  </p>
                 </div>
                 <!-- End Card -->
               </div>
 
-              <span class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
-                <span class="text-sm font-medium text-slate-400 leading-none">You</span>
+              <span
+                class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
+                <span class="text-sm font-medium text-slate-400 leading-none"
+                  >You</span
+                >
               </span>
             </li>
             <!-- End Chat -->
 
             <!-- Chat Bubble -->
             <li class="max-w-lg flex gap-x-2 sm:gap-x-4 me-11">
-              <span class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
-                <span class="text-sm font-medium text-slate-400 leading-none">Min</span>
+              <span
+                class="shrink-0 inline-flex items-center justify-center size-[38px] rounded-full bg-gray-600">
+                <span class="text-sm font-medium text-slate-400 leading-none"
+                  >Min</span
+                >
               </span>
 
               <!-- Card -->
               <div class="bg-slate-400 rounded-2xl p-3 space-y-3">
                 <p class="text-sm md:text-[1rem] text-slate-900">
-                  Universal Bevel Protractor biasa digunakan di industri Molding dan Sheet Metal untuk proses produksi.
+                  Universal Bevel Protractor biasa digunakan di industri Molding
+                  dan Sheet Metal untuk proses produksi.
                 </p>
               </div>
               <!-- End Card -->
@@ -306,59 +425,105 @@
     </section>
 
     <!-- INI OUR TEAM ........................................................................... -->
-    <section id="ourteam" class="bg-slate-400 w-full justify-center" x-data="carousel()">
-      <div class="container py-16 lg:py-32 sm:flex items-center justify-around lg:justify-evenly mx-auto">
+    <section
+      id="ourteam"
+      class="bg-slate-400 w-full justify-center"
+      x-data="carousel()">
+      <div
+        class="container py-16 lg:py-32 sm:flex items-center justify-around lg:justify-evenly mx-auto">
         <div>
-          <h1 class="text-start tracking-widest ps-6 sm:ps-0 font-extrabold text-5xl lg:text-7xl text-slate-900 mb-2">Meet <br> <span class="text-emerald-600">Our Teams</span></h1>
-         </div>
+          <h1
+            class="text-start tracking-widest ps-6 sm:ps-0 font-extrabold text-5xl lg:text-7xl text-slate-900 mb-2">
+            Meet <br />
+            <span class="text-emerald-600">Our Teams</span>
+          </h1>
+        </div>
         <div class="sm:w-1/2 lg:w-2/5 gap-8 h-96 relative mx-4 shadow-xl">
           <div class="w-full carousel-container">
-              <!-- Konten Tim dengan animasi -->
-              <template x-for="(item, index) in items" :key="index">
-                <div x-show="currentIndex === index" class="absolute inset-0 flex flex-col items-center justify-center carousel-content"
-                  x-transition:enter="transition ease-out duration-1000"
-                  x-transition:enter-start="opacity-0"
-                  x-transition:enter-end="opacity-100"
-                  x-transition:leave="transition ease-in duration-1000"
-                  x-transition:leave-start="opacity-100"
-                  x-transition:leave-end="opacity-0">
-                  <img :src="item.image" alt="" class="mx-auto w-44 md:w-60">
-                  <div class="bg-slate-900 text-slate-300 text-center py-3 absolute bottom-0 left-0 right-0 shadow-xl">
-                    <h1 x-text="item.name" class="font-semibold sm:tracking-wider"></h1>
-                    <p x-text="item.role" class="font-extralight sm:tracking-widest text-sm"></p>
-                  </div>
+            <!-- Konten Tim dengan animasi -->
+            <template x-for="(item, index) in items" :key="index">
+              <div
+                x-show="currentIndex === index"
+                class="absolute inset-0 flex flex-col items-center justify-center carousel-content"
+                x-transition:enter="transition ease-out duration-1000"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-1000"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0">
+                <img :src="item.image" alt="" class="mx-auto w-52 md:w-60" />
+                <div
+                  class="bg-slate-900 text-slate-300 text-center py-3 absolute bottom-0 left-0 right-0 shadow-xl">
+                  <h1
+                    x-text="item.name"
+                    class="font-semibold sm:tracking-wider"></h1>
+                  <p
+                    x-text="item.role"
+                    class="font-extralight sm:tracking-widest text-sm"></p>
                 </div>
-              </template>
+              </div>
+            </template>
 
-              <!-- Tombol Previous -->
-              <button @click="prev()" class="z-10 absolute top-1/2 -translate-y-1/2 left-1">
-                <span class="inline-flex bg-gray-950 bg-opacity-20 items-center justify-center p-3 md:w-10 md:h-10 rounded-full hover:bg-opacity-70">
-                  <svg class="w-4 h-4 md:w-4 md:h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4" />
-                  </svg>
-                </span>
-              </button>
-      
-              <!-- Tombol Next -->
-              <button @click="next()" class="z-10 absolute top-1/2 -translate-y-1/2 right-1">
-                <span class="inline-flex bg-gray-950 bg-opacity-20 items-center justify-center p-3 md:w-10 md:h-10 rounded-full hover:bg-opacity-70">
-                  <svg class="w-4 h-4 md:w-4 md:h-4 text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                  </svg>
-                </span>
-              </button>
+            <!-- Tombol Previous -->
+            <button
+              @click="prev()"
+              class="z-10 absolute top-1/2 -translate-y-1/2 left-1">
+              <span
+                class="inline-flex bg-gray-950 bg-opacity-20 items-center justify-center p-3 md:w-10 md:h-10 rounded-full hover:bg-opacity-70">
+                <svg
+                  class="w-4 h-4 md:w-4 md:h-4 text-white rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10">
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 1 1 5l4 4" />
+                </svg>
+              </span>
+            </button>
+
+            <!-- Tombol Next -->
+            <button
+              @click="next()"
+              class="z-10 absolute top-1/2 -translate-y-1/2 right-1">
+              <span
+                class="inline-flex bg-gray-950 bg-opacity-20 items-center justify-center p-3 md:w-10 md:h-10 rounded-full hover:bg-opacity-70">
+                <svg
+                  class="w-4 h-4 md:w-4 md:h-4 text-white rtl:rotate-180"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 6 10">
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m1 9 4-4-4-4" />
+                </svg>
+              </span>
+            </button>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Ini Footer ...................................................................................... -->
-    <section id="footer" class="bg-slate-900 text-slate-400 py-2 border-t-2 border-emerald-600">
+    <section
+      id="footer"
+      class="bg-slate-900 text-slate-400 py-2 border-t-2 border-emerald-600">
       <div class="container mx-auto relative z-0">
-        <div class="flex md:flex-row justify-between md:justify-around gap-2 px-6">
+        <div
+          class="flex md:flex-row justify-between md:justify-around gap-2 px-6">
           <!-- Contact Information -->
           <div class="">
-            <h2 class="text-lg font-semibold mb-2 text-slate-400">Contact Us</h2>
+            <h2 class="text-lg font-semibold mb-2 text-slate-400">
+              Contact Us
+            </h2>
             <p class="text-xs sm:text-sm mb-2 gap-2">
               <i class="fas fa-map-marker-alt text-emerald-500 me-2"></i>
               <span>Kota Serang, Lontar Baru 42115</span>
@@ -377,15 +542,23 @@
           <div>
             <h2 class="text-lg font-semibold mb-2 text-slate-400">Follow Us</h2>
             <div class="flex space-x-4">
-              <a href="https://www.facebook.com/fauzan.novansyah.1" class="text-slate-400 hover:text-white">
+              <a
+                href="https://www.facebook.com/fauzan.novansyah.1"
+                class="text-slate-400 hover:text-white">
                 <i class="fab fa-facebook-f"></i>
                 <span class="sr-only">Facebook</span>
               </a>
-              <a href="https://twitter.com" target="_blank" class="text-slate-400 hover:text-white">
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                class="text-slate-400 hover:text-white">
                 <i class="fab fa-twitter"></i>
                 <span class="sr-only">Twitter</span>
               </a>
-              <a href="https://www.instagram.com/ozann15_/" target="_blank" class="text-slate-400 hover:text-white">
+              <a
+                href="https://www.instagram.com/ozann15_/"
+                target="_blank"
+                class="text-slate-400 hover:text-white">
                 <i class="fab fa-instagram"></i>
                 <span class="sr-only">Instagram</span>
               </a>
@@ -398,24 +571,37 @@
       </div>
     </section>
 
-      <script>
-        function carousel() {
-          return {
-            currentIndex: 0,
-            items: [
-              { name: 'Fauzan Novansyah', role: 'Mahasiswa - Developer', image: 'img/fauzan.jpg' },
-              { name: 'Ananda Yhuto Wibisono Putra, M.Pd.', role: 'Dosen - Pembimbing 1', image: 'img/yhuto.jpg' },
-              { name: 'Haris Abizar M.Pd.', role: 'Dosen - Pembimbing 2', image: 'img/haris.jpg' }
-            ],
-            next() {
-              this.currentIndex = (this.currentIndex + 1) % this.items.length;
+    <script>
+      function carousel() {
+        return {
+          currentIndex: 0,
+          items: [
+            {
+              name: "Fauzan Novansyah",
+              role: "Mahasiswa - Developer",
+              image: "img/fauzan.png",
             },
-            prev() {
-              this.currentIndex = (this.currentIndex - 1 + this.items.length) % this.items.length;
-            }
-          }
-        }
-      </script>
-      <script src="./node_modules/preline/dist/preline.js"></script>
+            {
+              name: "Ananda Yhuto Wibisono Putra, M.Pd.",
+              role: "Dosen - Pembimbing 1",
+              image: "img/yhuto.png",
+            },
+            {
+              name: "Haris Abizar M.Pd.",
+              role: "Dosen - Pembimbing 2",
+              image: "img/haris.png",
+            },
+          ],
+          next() {
+            this.currentIndex = (this.currentIndex + 1) % this.items.length;
+          },
+          prev() {
+            this.currentIndex =
+              (this.currentIndex - 1 + this.items.length) % this.items.length;
+          },
+        };
+      }
+    </script>
+    <script src="./node_modules/preline/dist/preline.js"></script>
   </body>
 </html>
